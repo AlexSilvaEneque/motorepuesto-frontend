@@ -3,11 +3,18 @@
     import type {Ref} from 'vue'
     import type { ProToggle } from '../../interfaces/index'
     import SidebarOptions from '@/components/UI/SidebarOptions.vue'
+    import SidebarOptionsVendedor from '@/components/UI/SidebarOptionsVendedor.vue'
     import SidebarMovil from '@/components/UI/SidebarMovil.vue'
     import IMenu from '@/components/UI/IMenu.vue'
+    import { useUserStore } from '../../stores/user'
+    import AuthAPI from '@/api/AuthAPI'
+    import SidebarMovilVendedor from '@/components/UI/SidebarMovilVendedor.vue'
+
+    const user = useUserStore()
 
     const toggle : Ref<boolean> = ref(false)
     const windowWidth : Ref<number> = ref(0)
+    const flagAdmin : Ref<boolean> = ref(false)
 
     const change = () => {
         if (windowWidth.value >= 768) {
@@ -28,9 +35,20 @@
         }
     }
 
-    onMounted(() => {
+    onMounted(async () => {
         window.addEventListener('resize', checkScreen)
         checkScreen()
+
+        try {
+            const { data } = await AuthAPI.admin()
+            if (data) {
+                flagAdmin.value = true
+            } else {
+                flagAdmin.value = false
+            } 
+        } catch (error) {
+            flagAdmin.value = false
+        }
     })
 </script>
 
@@ -43,7 +61,12 @@
                 </div>
 
                 <div class="flex flex-column gap-1 custom">
-                    <SidebarOptions />
+                    <template v-if="flagAdmin">
+                        <SidebarOptions />
+                    </template>
+                    <template v-else>
+                        <SidebarOptionsVendedor />
+                    </template>
                 </div>
             </div>
 
@@ -51,7 +74,12 @@
                 v-model:visible="toggle"
                 class="w-11"
             >
-                <SidebarMovil />
+                <template v-if="flagAdmin">
+                    <SidebarMovil />
+                </template>
+                <template v-else>
+                    <SidebarMovilVendedor />
+                </template>
             </Sidebar>
 
             <div class="col mx-2 ">

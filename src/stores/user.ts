@@ -2,14 +2,12 @@ import AuthAPI from '@/api/AuthAPI'
 import { defineStore } from 'pinia'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import type { IRUser } from '../interfaces/index'
 
 export const useUserStore = defineStore('user', () => {
 
     const router = useRouter()
-
-    const users = ref([])
-    // const userCurrent = ref({})
-    const user = ref({})
+    const user = ref<IRUser>({} as IRUser)
 
     onMounted(async () => {
         try {
@@ -22,14 +20,13 @@ export const useUserStore = defineStore('user', () => {
 
     function logout() {
         localStorage.removeItem('AUTH_TOKEN')
-        user.value = {}
+        localStorage.removeItem('id')
+        user.value = {} as IRUser
         router.push({ name: 'login' })
     }
 
     return {
-        users,
         user,
-        // userCurrent,
         logout
     }
 })

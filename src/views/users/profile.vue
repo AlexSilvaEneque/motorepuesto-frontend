@@ -1,10 +1,27 @@
 <script setup lang="ts">
-    import { ref } from "vue"
+    import { ref, onMounted } from 'vue'
     import IBreadcrumb from '@/components/UI/IBreadcrumb.vue'
+    import { useUserStore } from '@/stores/user'
+    import { type IRUser } from '../../interfaces/index'
+    import useUser from '../../composables/user'
 
     const current = ref({
         label: 'Mi Perfil',
         icon: 'pi pi-fw pi-user'
+    })
+
+    const user = useUserStore()
+    const userComp = useUser()
+
+    const userEdit = ref()
+
+    const handleSubmit = async (dataForm : IRUser) => {
+        await userComp.update(<string>user.user._id, { role: user.user.role, ... dataForm}, true)
+    }
+
+    onMounted(async() => {
+        const idl = localStorage.getItem('id')
+        userEdit.value = await userComp.getById(<string>idl)
     })
 </script>
 
@@ -17,52 +34,86 @@
             />
         </div>
         <div class="pm-4">
-            <div class="formgrid grid">
-                <div class="field col-12 md:col-6 lg:col-4">
-                    <label>Nombres</label>
-                    <InputText
-                        class="text-base text-color p-2 w-full"
-                    />
-                </div>
-                <div class="field col-12 md:col-6 lg:col-4">
-                    <label>Apellidos</label>
-                    <InputText
-                        class="text-base text-color p-2 w-full"
-                    />
-                </div>
-                <div class="field col-12 md:col-6 lg:col-4">
-                    <label>Email</label>
-                    <InputText
-                        class="text-base text-color p-2 w-full"
-                    />
-                </div>
-                <div class="field col-12 md:col-6 lg:col-4">
-                    <label>Nombre de usuario</label>
-                    <InputText
-                        class="text-base text-color p-2 w-full"
-                    />
-                </div>
-                <div class="field col-12 md:col-6 lg:col-4">
-                    <label>N° celular</label>
-                    <InputMask
-                        mask="999-999-999"
-                        class="text-base text-color p-2 w-full"
-                    />
-                </div>
-                <div class="field col-12 md:col-6 lg:col-4">
-                    <label class="block">Nueva contraseña</label>
-                    <div class="p-inputgroup flex-1">
-                        <Password
-                            :feedback="false"
-                            toggleMask
-                        />
+
+            <FormKit
+                type="form"
+                :actions="false"
+                incomplete-message="Revisa las notificaciones"
+                @submit="handleSubmit"
+            >
+                <template v-if="userEdit">
+                    <div class="formgrid grid">
+                        <div class="field col-12 md:col-6 lg:col-4">
+                            <FormKit
+                                type="text"
+                                label="Nombres"
+                                name="first_name"
+                                validation="required"
+                                :value="userEdit.first_name"
+                                :validation-messages="{
+                                    required: 'El nombre es obligatorio'
+                                }"
+                            />
+                        </div>
+                        <div class="field col-12 md:col-6 lg:col-4">
+                            <FormKit
+                                type="text"
+                                label="Nombres"
+                                name="last_name"
+                                validation="required"
+                                :value="userEdit.last_name"
+                                :validation-messages="{
+                                    required: 'El nombre es obligatorio'
+                                }"
+                            />
+                        </div>
+                        <div class="field col-12 md:col-6 lg:col-4">
+                            <FormKit
+                                type="email"
+                                label="Email"
+                                name="email"
+                                placeholder="Email"
+                                :value="userEdit.email"
+                                validation="required|email"
+                                :validation-messages="{
+                                    required: 'El email es obligatorio',
+                                    email: 'Email no válido'
+                                }"
+                            />
+                        </div>
+                        <div class="field col-12 md:col-6 lg:col-4">
+                            <FormKit
+                                type="text"
+                                label="Nombre de usuario"
+                                name="username"
+                                :value="userEdit.username"
+                                placeholder="Tu nombre de usuario"
+                            />
+                        </div>
+                        <div class="field col-12 md:col-6 lg:col-4">
+                            <FormKit
+                                type="text"
+                                label="N° celular"
+                                name="phone"
+                                :value="userEdit.phone"
+                                placeholder="000 000 000"
+                            />
+                        </div>
+                        <div class="field col-12 md:col-6 lg:col-4">
+                            <FormKit
+                                type="password"
+                                name="password"
+                                label="Password"
+                            />
+                        </div>
                     </div>
-                </div>
-            </div>
-            <Button
-                label="Guardar cambios"
-                icon="pi pi-save"
-            />
+                    <Button
+                        label="Guardar cambios"
+                        icon="pi pi-save"
+                        type="submit"
+                    />
+                </template>
+            </FormKit>
         </div>
     </div>
 </template>

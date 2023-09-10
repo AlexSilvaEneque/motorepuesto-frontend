@@ -11,12 +11,14 @@ export interface Credenciales {
 }
 
 export interface IRUser {
+    _id?: string
     first_name: string
     last_name: string
     email: string
     username?: string
     phone?: string
     password: string
+    role?: IRRol
 }
 
 

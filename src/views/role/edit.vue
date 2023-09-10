@@ -17,7 +17,7 @@
     const items = ref([
         {
             label: 'Registro roles',
-            icon: 'pi pi-fw pi-plus'
+            icon: 'pi pi-fw pi-pencil'
         }
     ])
 
@@ -52,7 +52,7 @@
 <template>
     <div class="w-full custom-2 bg-white border-round shadow-1 px-5 mt-3 pb-3 md:pb-0">
         <div class="md:flex mb-5 justify-content-between pt-2">
-            <h1 class="text-2xl md:text-3xl text-800">Registro de roles</h1>
+            <h1 class="text-2xl md:text-3xl text-800">Editar roles</h1>
             <IBreadcrumb
                 :home="home"
                 :items="items"
@@ -85,7 +85,7 @@
                 </div>
                 <Button
                     type="submit"
-                    label="Guardar"
+                    label="Guardar cambios"
                     icon="pi pi-save"
                 />
             </FormKit>

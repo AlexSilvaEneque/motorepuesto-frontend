@@ -45,16 +45,25 @@ const router = createRouter({
         {
           path: 'roles',
           name: 'index-roles',
+          meta: {
+            isAdmin: true
+          },
           component: () => import('../views/role/index.vue')
         },
         {
           path: 'roles/nuevo',
           name: 'new-role',
+          meta: {
+            isAdmin: true
+          },
           component: () => import('../views/role/nuevo.vue')
         },
         {
           path: 'roles/edit/:id',
           name: 'edit-role',
+          meta: {
+            isAdmin: true
+          },
           component: () => import('../views/role/edit.vue')
         },
 
@@ -66,7 +75,18 @@ const router = createRouter({
         {
           path: 'usuarios/nuevo',
           name: 'new-user',
+          meta: {
+            isAdmin: true
+          },
           component: () => import('../views/users/nuevo.vue')
+        },
+        {
+          path: 'usuarios/edit/:id',
+          name: 'edit-user',
+          meta: {
+            isAdmin: true
+          },
+          component: () => import('../views/users/edit.vue')
         },
         {
           path: 'mi-perfil',
@@ -105,6 +125,24 @@ router.beforeEach(async(to, from) => {
     }
   } else {
     return
+  }
+})
+
+// routes only for admins
+
+router.beforeEach(async(to, from) => {
+  const isAdmin = to.matched.some(url => url.meta.isAdmin)
+  if (isAdmin) {
+    try {
+      const { data } = await AuthAPI.admin()
+      if (data) {
+        return
+      } else {
+        return { name: 'dashboard' }  
+      }
+    } catch (error) {
+      return { name: 'dashboard' }
+    }
   }
 })
 

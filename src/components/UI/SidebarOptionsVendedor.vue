@@ -24,12 +24,6 @@
             command: () => changeToggle()
         },
         {
-            label: 'Roles',
-            icon: 'pi pi-briefcase',
-            to: '/roles',
-            command: () => changeToggle()
-        },
-        {
             label: 'Usuarios',
             icon: 'pi pi-users',
             to: '/usuarios',

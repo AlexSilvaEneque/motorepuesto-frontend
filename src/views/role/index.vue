@@ -1,9 +1,8 @@
 <script setup lang="ts">
-    import { ref, computed, onMounted, inject } from 'vue';
+    import { ref, computed, onMounted, inject, type Ref } from 'vue'
     import IBreadcrumb from '../../components/UI/IBreadcrumb.vue'
     import { useRouter } from "vue-router"
-    import type { Ref } from "vue"
-    import { useRole } from '../../composables/rol'
+    import useRole from '../../composables/rol'
     import type { IRRol } from '../../interfaces/index'
     import rolAPI from "@/api/rolAPI"
     import { useConfirm } from "primevue/useconfirm"
@@ -112,7 +111,11 @@
                     </span>    
                 </template>
 
-                <template #empty>No hay data</template>
+                <template #empty>
+                    <p class="text-center">
+                        No hay coincidencias
+                    </p>
+                </template>
 
                 <Column field="id" header="ID" sortable />
                 <Column field="description" header="Nombre" sortable />

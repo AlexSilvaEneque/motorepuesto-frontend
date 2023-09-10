@@ -1,20 +1,24 @@
 <script setup lang="ts">
-    import { ref, computed, onMounted, watch } from "vue"
-    import IBreadcrumb from '../../components/UI/IBreadcrumb.vue'
+    import { ref, computed, onMounted, watch, inject, type Ref } from "vue"
+    import IBreadcrumb from '@/components/UI/IBreadcrumb.vue'
+    import Loading from "@/components/UI/Loading.vue"
     import { useRouter } from "vue-router"
     import useUser from "@/composables/user"
-    import { useUserStore } from "@/stores/user"
     import type { IRUser } from '../../interfaces/index'
-    import type { Ref } from "vue"
+    import { useConfirm } from "primevue/useconfirm"
+import AuthAPI from "@/api/AuthAPI"
 
     const router = useRouter()
     const composable = useUser()
-    const userStore = useUserStore()
+
+    const confirm = useConfirm()
+    const toast : any = inject('toast')
 
     const searchInput = ref('')
     const visible = ref(false)
     const user = ref()
     const loading = ref(false)
+    const flagAdmin : Ref<boolean> = ref(false)
 
     const current = ref({
         label: 'Usuarios',
@@ -26,7 +30,6 @@
     const filteredUsers = computed(() => {
       if (searchInput.value) {
         return users.value.filter(user => user.first_name.toLowerCase().includes(searchInput.value.toLowerCase()))
-
       } else {
         return users.value
       }
@@ -43,19 +46,53 @@
         loading.value = false
     }
 
+    const redirectEdit = (id : string) => {
+        router.push({ name: 'edit-user', params: { id } })
+    }
+
+    const deleteItem = async (id : string) => {
+        confirm.require({
+            group: 'positionDialog',
+            message: '¿Seguro de eliminar?',
+            header: 'Confirmar eliminación',
+            icon: 'pi pi-info-circle',
+            position: 'left',
+            accept: async () => {
+                const { data } = await composable.deleteUser(id)
+                toast.open({
+                    message: data.msg,
+                    type: 'success'
+                })
+                users.value = users.value.filter(user => user._id !== id)
+            },
+            reject: () => {
+                router.push({ name: 'index-users' })
+            }
+        })
+    }
+
     watch(visible, () => {
-        console.log('cambio')
         if (!visible) {
             user.value = null
         }
     }, { deep: true })
 
     onMounted(async () => {
-        await composable.allUser()
-        users.value = userStore.users
+        users.value = await composable.allUser()
         users.value = users.value.map((user, index) => {
             return { ...user, id: index + 1 }
         })
+
+        try {
+            const { data } = await AuthAPI.admin()
+            if (data) {
+                flagAdmin.value = true
+            } else {
+                flagAdmin.value = false
+            } 
+        } catch (error) {
+            flagAdmin.value = false
+        }
     })
 
 </script>
@@ -70,7 +107,7 @@
         </div>
         <div class="w-full">
 
-            <div class="md:flex justify-content-end mb-3">
+            <div v-if="flagAdmin" class="md:flex justify-content-end mb-3">
                 <Button
                     label="Registrar usuario"
                     class="bg-primary no-underline text-sm md:text-md lg:text-base md:font-medium"
@@ -94,7 +131,11 @@
                     </span>    
                 </template>
 
-                <template #empty>No hay data</template>
+                <template #empty>
+                    <p class="text-center">
+                        No hay coincidencias
+                    </p>
+                </template>
 
                 <Column field="id" header="ID" sortable />
                 <Column field="first_name" header="Nombre" sortable />
@@ -110,17 +151,19 @@
                                 outlined
                                 @click="view(slotProps.data._id)"
                             />
-                            <Button
+                            <Button v-if="flagAdmin"
                                 icon="pi pi-pencil"
                                 severity="success"
                                 size="small"
                                 outlined
+                                @click="redirectEdit(slotProps.data._id)"
                             />
-                            <Button
+                            <Button v-if="flagAdmin"
                                 icon="pi pi-trash"
                                 severity="danger"
                                 size="small"
                                 outlined
+                                @click="deleteItem(slotProps.data._id)"
                             />
                         </div>
                     </template>
@@ -145,8 +188,25 @@
             </div>
             <div class="col-12 grid">
                 <p class="font-medium mr-2 col-4">Username:</p>
-                <span class="col">{{ user.username ? user.username : 'Sin definir' }}</span>
+                <span class="col">{{ user.username }}</span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Celular:</p>
+                <span class="col">{{ user.celular }}</span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Rol:</p>
+                <span class="col">{{ user.role.description }}</span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Estado:</p>
+                <span class="col">{{ user.status ? 'Habilitado' : 'Inhabilitado' }}</span>
             </div>
         </div>
+        <p v-else>
+            <Loading />
+        </p>
     </Dialog>
+
+    <ConfirmDialog group="positionDialog" />
 </template>

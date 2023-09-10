@@ -11,10 +11,12 @@ export default function useUser () {
     const toast : any = inject('toast')
     const userStore = useUserStore()
 
-    const login = async (data : Credenciales) => {
+    const login = async (dataForm : Credenciales) => {
         try {
-            const { data : {token} } = await AuthAPI.login(data)
+            const { data : {token} } = await AuthAPI.login(dataForm)
             localStorage.setItem('AUTH_TOKEN', token)
+            const { data } = await AuthAPI.auth()
+            localStorage.setItem('id', data._id)
             toast.open({
                 message: 'Inicio de sesión exitoso',
                 type: 'success'
@@ -48,10 +50,38 @@ export default function useUser () {
         }
     }
 
+    const update = async (id : string, dataForm : IRUser, profile?: boolean) => {
+        try {
+            const { data } = await userAPI.update(id, dataForm)
+            toast.open({
+                message: data.msg,
+                type: 'success'
+            })
+            setTimeout(() => {
+                router.push({ name: 'index-users' })
+            }, 2000)
+
+            if (profile) {
+                const { data: current } = await AuthAPI.auth()
+                userStore.user = current
+            }
+
+        } catch (error:any) {
+            console.log(error)
+            toast.open({
+                message: error.response.data.msg,
+                type: 'error'
+            })
+        }
+    }
+
+    const deleteUser = async (id : string) => {
+        return await userAPI.delete(id)
+    }
+
     const allUser = async () => {
         const { data } = await userAPI.allUsers()
-        console.log(data)
-        userStore.users = data.user
+        return data.user.filter((u : any) => u._id !== userStore.user._id!)
     }
 
     const getById = async (id:string) => {
@@ -63,6 +93,8 @@ export default function useUser () {
         login,
         register,
         allUser,
-        getById
+        getById,
+        update,
+        deleteUser
     }
 }

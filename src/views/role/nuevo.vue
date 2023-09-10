@@ -2,7 +2,7 @@
     import { ref } from "vue"
     import IBreadcrumb from '@/components/UI/IBreadcrumb.vue'
     import type { IRRol } from '../../interfaces/index'
-    import { useRole } from '../../composables/rol';
+    import useRole from '../../composables/rol';
 
     const rolComposable = useRole()
 

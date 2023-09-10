@@ -7,5 +7,8 @@ export default {
     },
     auth() {
         return api.get('/auth/user')
+    },
+    admin() {
+        return api.get('/auth/admin')
     }
 }
