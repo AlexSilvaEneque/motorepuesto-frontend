@@ -6,7 +6,10 @@
     import useUser from "@/composables/user"
     import type { IRUser } from '../../interfaces/index'
     import { useConfirm } from "primevue/useconfirm"
-import AuthAPI from "@/api/AuthAPI"
+    import AuthAPI from "@/api/AuthAPI"
+    import { useUserStore } from '../../stores/user'
+
+    const store = useUserStore()
 
     const router = useRouter()
     const composable = useUser()

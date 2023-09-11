@@ -67,7 +67,6 @@ export default function useUser () {
             }
 
         } catch (error:any) {
-            console.log(error)
             toast.open({
                 message: error.response.data.msg,
                 type: 'error'
@@ -81,7 +80,7 @@ export default function useUser () {
 
     const allUser = async () => {
         const { data } = await userAPI.allUsers()
-        return data.user.filter((u : any) => u._id !== userStore.user._id!)
+        return data
     }
 
     const getById = async (id:string) => {
