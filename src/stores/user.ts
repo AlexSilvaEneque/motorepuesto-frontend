@@ -9,6 +9,7 @@ export const useUserStore = defineStore('user', () => {
     const router = useRouter()
     const user = ref<IRUser>({} as IRUser)
     const users = ref<IRUser[]>()
+    const isAdmin = ref<boolean>()
 
     onMounted(async () => {
         try {
@@ -29,6 +30,7 @@ export const useUserStore = defineStore('user', () => {
     return {
         user,
         users,
-        logout
+        logout,
+        isAdmin
     }
 })

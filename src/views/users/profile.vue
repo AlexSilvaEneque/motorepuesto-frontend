@@ -1,7 +1,6 @@
 <script setup lang="ts">
     import { ref, onMounted } from 'vue'
     import IBreadcrumb from '@/components/UI/IBreadcrumb.vue'
-    import { useUserStore } from '@/stores/user'
     import { type IRUser } from '../../interfaces/index'
     import useUser from '../../composables/user'
 
@@ -10,13 +9,12 @@
         icon: 'pi pi-fw pi-user'
     })
 
-    const user = useUserStore()
     const userComp = useUser()
 
     const userEdit = ref()
 
     const handleSubmit = async (dataForm : IRUser) => {
-        await userComp.update(<string>user.user._id, { role: user.user.role, ... dataForm}, true)
+        await userComp.update(<string>userEdit.value._id, { role: userEdit.value.role._id, ... dataForm}, true)
     }
 
     onMounted(async() => {

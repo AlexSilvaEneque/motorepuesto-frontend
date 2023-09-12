@@ -80,7 +80,8 @@ export default function useUser () {
 
     const allUser = async () => {
         const { data } = await userAPI.allUsers()
-        return data
+        userStore.isAdmin = data.isAdmin
+        return data.user
     }
 
     const getById = async (id:string) => {

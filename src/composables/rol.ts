@@ -2,10 +2,12 @@ import { inject } from 'vue'
 import type { IRRol } from '@/interfaces'
 import rolAPI from '@/api/rolAPI'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
 
 export default function useRole() {
 
     const router = useRouter()
+    const userStore = useUserStore()
     const toast : any = inject('toast')
 
     const register = async (formData : IRRol) => {
@@ -26,6 +28,7 @@ export default function useRole() {
 
     const allRoles = async () => {
         const { data } = await rolAPI.getAll()
+        userStore.isAdmin = data.isAdmin
         return data.roles
     }
 

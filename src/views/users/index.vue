@@ -6,10 +6,9 @@
     import useUser from "@/composables/user"
     import type { IRUser } from '../../interfaces/index'
     import { useConfirm } from "primevue/useconfirm"
-    import AuthAPI from "@/api/AuthAPI"
     import { useUserStore } from '../../stores/user'
 
-    const store = useUserStore()
+    const userStore = useUserStore()
 
     const router = useRouter()
     const composable = useUser()
@@ -21,7 +20,6 @@
     const visible = ref(false)
     const user = ref()
     const loading = ref(false)
-    const flagAdmin : Ref<boolean> = ref(false)
 
     const current = ref({
         label: 'Usuarios',
@@ -85,17 +83,6 @@
         users.value = users.value.map((user, index) => {
             return { ...user, id: index + 1 }
         })
-
-        try {
-            const { data } = await AuthAPI.admin()
-            if (data) {
-                flagAdmin.value = true
-            } else {
-                flagAdmin.value = false
-            } 
-        } catch (error) {
-            flagAdmin.value = false
-        }
     })
 
 </script>
@@ -108,9 +95,9 @@
                 :home="current"
             />
         </div>
-        <div class="w-full">
+        <div class="w-full" v-if="users.length > 0">
 
-            <div v-if="flagAdmin" class="md:flex justify-content-end mb-3">
+            <div v-if="userStore.isAdmin" class="md:flex justify-content-end mb-3">
                 <Button
                     label="Registrar usuario"
                     class="bg-primary no-underline text-sm md:text-md lg:text-base md:font-medium"
@@ -154,14 +141,14 @@
                                 outlined
                                 @click="view(slotProps.data._id)"
                             />
-                            <Button v-if="flagAdmin"
+                            <Button v-if="userStore.isAdmin"
                                 icon="pi pi-pencil"
                                 severity="success"
                                 size="small"
                                 outlined
                                 @click="redirectEdit(slotProps.data._id)"
                             />
-                            <Button v-if="flagAdmin"
+                            <Button v-if="userStore.isAdmin"
                                 icon="pi pi-trash"
                                 severity="danger"
                                 size="small"

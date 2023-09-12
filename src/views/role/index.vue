@@ -6,9 +6,11 @@
     import type { IRRol } from '../../interfaces/index'
     import rolAPI from "@/api/rolAPI"
     import { useConfirm } from "primevue/useconfirm"
+    import { useUserStore } from '../../stores/user'
 
     const router = useRouter()
     const composable = useRole()
+    const user = useUserStore()
 
     const confirm = useConfirm()
     const toast : any = inject('toast')
@@ -85,9 +87,9 @@
                 :home="current"
             />
         </div>
-        <div class="w-full">
+        <div class="w-full" v-if="roles.length > 0">
 
-            <div class="md:flex justify-content-end mb-3">
+            <div class="md:flex justify-content-end mb-3" v-if="user.isAdmin">
                 <Button
                     label="Registrar rol"
                     class="bg-primary no-underline text-sm md:text-md lg:text-base md:font-medium"
