@@ -30,16 +30,67 @@ const router = createRouter({
           name: 'new-client',
           component: () => import('../views/clients/nuevo.vue')
         },
+        {
+          path: 'clientes/edit/:id',
+          name: 'edit-client',
+          component: () => import('../views/clients/edit.vue')
+        },
 
         {
           path: 'proveedores',
-          name: 'index-providers',
-          component: () => import('../views/providers/index.vue')
+          name: 'index-suppliers',
+          meta: {
+            isAdmin: true
+          },
+          component: () => import('../views/suppliers/index.vue')
         },
         {
           path: 'proveedores/nuevo',
-          name: 'new-providers',
-          component: () => import('../views/providers/nuevo.vue')
+          name: 'new-supplier',
+          meta: {
+            isAdmin: true
+          },
+          component: () => import('../views/suppliers/nuevo.vue')
+        },
+        {
+          path: 'proveedores/edit/:id',
+          name: 'edit-supplier',
+          meta: {
+            isAdmin: true
+          },
+          component: () => import('../views/suppliers/edit.vue')
+        },
+
+        {
+          path: 'productos',
+          name: 'index-product',
+          component: () => import('../views/product/index.vue')
+        },
+        {
+          path: 'productos/nuevo',
+          name: 'new-product',
+          component: () => import('../views/product/nuevo.vue')
+        },
+        {
+          path: 'productos/edit/:id',
+          name: 'edit-product',
+          component: () => import('../views/product/edit.vue')
+        },
+
+        {
+          path: 'servicios',
+          name: 'index-service',
+          component: () => import('../views/services/index.vue')
+        },
+        {
+          path: 'servicios/nuevo',
+          name: 'new-service',
+          component: () => import('../views/services/nuevo.vue')
+        },
+        {
+          path: 'servicios/edit/:id',
+          name: 'edit-service',
+          component: () => import('../views/services/edit.vue')
         },
 
         {

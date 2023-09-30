@@ -19,12 +19,53 @@ export interface IRUser {
     phone?: string
     password: string
     role?: IRRol
+    status?: boolean
 }
 
 
 export interface IRRol {
-    description?: string
     _id?: string
+    description?: string
     label?: string
     value?: string
+    status?: boolean
+}
+
+export interface IClient {
+    _id?: string
+    name: string
+    type: number
+    doc: string
+    address?: string
+    phone?: string
+    status?: boolean
+}
+
+export interface IProduct {
+    _id?: string
+    name: string
+    price: {
+        $numberDecimal: number
+    }
+    quantity: number
+    status?: boolean
+}
+
+export interface ISupplier {
+    _id?: string
+    social_reason: string
+    representative: string
+    address?: string
+    email?: string
+    phono: string
+    status?: boolean
+}
+
+export interface IService {
+    _id?: string
+    description: string
+    price: {
+        $numberDecimal: number
+    }
+    status?: boolean
 }

@@ -67,7 +67,7 @@
                 users.value = users.value.filter(user => user._id !== id)
             },
             reject: () => {
-                router.push({ name: 'index-users' })
+                // router.push({ name: 'index-users' })
             }
         })
     }

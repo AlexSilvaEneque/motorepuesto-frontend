@@ -1,89 +1,86 @@
 <script setup lang="ts">
-    import { ref, computed, onMounted, type Ref, watch } from 'vue';
+    import { ref, computed, onMounted, type Ref, watch } from "vue";
     import { useRouter } from "vue-router";
-    import type { IClient } from '../../interfaces/index';
-    import useClient from "@/composables/client";
+    import type { ISupplier } from "../../interfaces/index";
+    import useSupplier from "@/composables/supplier";
     import { useConfirm } from "primevue/useconfirm";
-    import { getSeverityStatus } from '../../utils/index';
+    import { getSeverityStatus } from "@/utils";
     import IBreadcrumb from "@/components/UI/IBreadcrumb.vue";
     import Loading from "@/components/UI/Loading.vue";
 
     const router = useRouter()
-    const composable = useClient()
+    const composable = useSupplier()
     const confirm = useConfirm()
-
-    const clients : Ref<IClient[]> = ref([])
-    const client = ref<IClient | null>()
+    
+    const suppliers : Ref<ISupplier[]> = ref([])
+    const supplier = ref<ISupplier | null>()
     const searchInput = ref<string>('')
-    const visible = ref(false)
-    const loading = ref(false)
-
+    const visible = ref<boolean>(false)
+    const loading = ref<boolean>(false)
 
     const current = ref({
-        label: 'Clientes',
-        icon: 'pi pi-fw pi-users'
+        label: 'Proveedores',
+        icon: 'pi pi-fw pi-truck'
+    })
+
+    const filteredSuppliers = computed(() => {
+        if (!searchInput.value) {
+            return suppliers.value
+        }
+        return suppliers.value.filter((supplier) => {
+            return Object.values(supplier).some((prop) => {
+                return String(prop).toLowerCase().includes(searchInput.value.toLowerCase())
+            })
+        })
     })
 
     const goToView = () => {
-        router.push({ name: 'new-client' })
+        router.push({ name: 'new-supplier' })
     }
 
-    const view = async (id: string) => {
+    const view = async (id : string) => {
         visible.value = true
         loading.value = true
-        client.value = await composable.getById(id)
+        supplier.value = await composable.getById(id)
         loading.value = false
     }
 
-    const redirectEdit = (id: string) => {
-        router.push({ name: 'edit-client', params: { id } })
+    const redirectEdit = (id : string) => {
+        router.push({ name: 'edit-supplier', params: { id } })
     }
 
-    const deleteItem = async (id: string) => {
+    const deleteItem = async (id : string) => {
         confirm.require({
             group: 'positionDialog',
-            message: '¿Seguro de eliminar?',
+            message: '¿Seuro de eliminar?',
             header: 'Confirmar eliminación',
             icon: 'pi pi-info-circle',
             position: 'left',
             accept: async () => {
-                await composable.deleteClient(id)
-                clients.value = clients.value.filter(client => client._id !== id)
+                await composable.deleteSupplier(id)
+                suppliers.value = suppliers.value.filter(supplier => supplier._id !== id)
             },
             reject: () => {
-                // router.push({ name: 'index-roles' })
+
             }
         })
     }
 
-    const filteredClients = computed(() => {
-      if (searchInput.value) {
-        return clients.value.filter((client) => {
-            return Object.values(client).some((prop) => {
-                return String(prop).toLowerCase().includes(searchInput.value.toLowerCase())
-            })
-        })
-      } else {
-        return clients.value
-      }
-    })
-
     watch(visible, () => {
         if (!visible) {
-            client.value = null
+            supplier.value = null
         }
     }, { deep: true })
 
     onMounted(async () => {
-        clients.value = await composable.allClient()
+        suppliers.value = await composable.allSupplier()
     })
-
 </script>
 
 <template>
-    <div class="w-full custom-2 bg-white border-round shadow-1 px-1 md:px-5 mt-3">
-        <div class="md:flex md:mb-3 justify-content-between pt-2">
-            <h1 class="text-2xl md:text-3xl text-800">Lista de clientes</h1>
+    <div class="w-full card custom-2 bg-white border-round shadow-1 px-1 md:px-5 mt-3">
+        <div class="md:flex mb-3 md:justify-content-between pt-2">
+            <h1 class="text-2xl md:text-3xl text-800">Lista de proveedores</h1>
             <IBreadcrumb
                 :home="current"
             />
@@ -91,7 +88,7 @@
         <div class="w-full">
             <div class="md:flex justify-content-end mb-3">
                 <Button
-                    label="Registrar cliente"
+                    label="Registrar proveedor"
                     class="bg-primary no-underline text-sm md:text-md lg:text-base md:font-medium"
                     icon="pi pi-user-plus"
                     @click="goToView"
@@ -102,7 +99,7 @@
                 paginator
                 :rows="5"
                 :rowsPerPageOptions="[5,10,20]"
-                :value="filteredClients"
+                :value="filteredSuppliers"
                 :global-filter-fields="['name']"
                 class="p-datatable-sm width-table sm:w-auto"
                 scrollable
@@ -115,16 +112,12 @@
                 </template>
 
                 <template #empty>No hay data</template>
-                
-                <Column field="name" header="Nombre" sortable />
-                <Column header="Tipo" sortable>
-                    <template #body="prop">
-                        {{ prop.data.type === 1 ? 'Natural' : 'Jurídico' }}
-                    </template>
-                </Column>
-                <Column header="Estado">
+
+                <Column field="social_reason" header="Nombre" sortable />
+                <Column field="representative" header="Representante" sortable />
+                <Column header="Estado" >
                     <template #body="props">
-                        <Tag :value="props.data.status ? 'Habilitado' : 'Inhabilitado' " :severity="getSeverityStatus(props.data)" />
+                        <Tag :value="props.data.status ? 'Habilitado' : 'Inhabilitado'" :severity="getSeverityStatus(props.data)" />
                     </template>
                 </Column>
                 <Column header="Opciones">
@@ -157,31 +150,31 @@
             </DataTable>
         </div>
     </div>
-    <Dialog v-model:visible="visible" modal header="Detalle Cliente">
-        <div class="grid" v-if="client && !loading">
+    <Dialog v-model:visible="visible" modal header="Detalle Producto">
+        <div class="grid" v-if="supplier && !loading">
             <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Nombre/Razón social:</p>
-                <span class="col">{{ client.name }}</span>
+                <p class="font-medium mr-2 col-4">Nombre:</p>
+                <span class="col">{{ supplier.social_reason }}</span>
             </div>
             <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Tipo cliente:</p>
-                <span class="col">{{ client.type === 1 ? 'Natural' : 'Jurídico' }}</span>
-            </div>
-            <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Documento:</p>
-                <span class="col">{{ client.doc }}</span>
+                <p class="font-medium mr-2 col-4">Representante:</p>
+                <span class="col">{{ supplier.representative }}</span>
             </div>
             <div class="col-12 grid">
                 <p class="font-medium mr-2 col-4">Dirección:</p>
-                <span class="col">{{ client.address }}</span>
+                <span class="col">{{ supplier.address }}</span>
             </div>
             <div class="col-12 grid">
                 <p class="font-medium mr-2 col-4">Teléfono:</p>
-                <span class="col">{{ client.phone }}</span>
+                <span class="col">{{ supplier.phono }}</span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Email:</p>
+                <span class="col">{{ supplier.email }}</span>
             </div>
             <div class="col-12 grid">
                 <p class="font-medium mr-2 col-4">Estado:</p>
-                <Tag :value="client.status ? 'Habilitado' : 'Inhabilitado'" :severity="getSeverityStatus(client)" />
+                <Tag :value="supplier.status ? 'Habilitado' : 'Inhabilitado'" :severity="getSeverityStatus(supplier)" />
             </div>
         </div>
         <div v-else>

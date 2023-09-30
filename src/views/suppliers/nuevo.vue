@@ -1,50 +1,43 @@
 <script setup lang="ts">
     import { ref } from "vue"
-    import IBreadcrumb from "@/components/UI/IBreadcrumb.vue"
-    import type { IClient } from "@/interfaces"
-    import useClient from '../../composables/client';
+    import type { ISupplier } from '../../interfaces/index';
+    import useSupplier from "@/composables/supplier";
+    import IBreadcrumb from '@/components/UI/IBreadcrumb.vue';
 
-    const composable = useClient()
+    const composable = useSupplier()
 
     const home = ref({
-        label: 'Clientes',
-        icon: 'pi pi-fw pi-user',
-        to: '/clientes'
+        label: 'Proveedores',
+        icon: 'pi pi-fw pi-truck',
+        to: '/proveedores'
     })
     const items = ref([
         {
-            label: 'Registro clientes',
-            icon: 'pi pi-fw pi-user-plus'
+            label: 'Registro proveedores',
+            icon: 'pi pi-fw pi-truck'
         }
     ])
 
     const options = ref([
         {
-            label: 'Seleccione un tipo',
-            value: '',
-            attrs: {
-                disabled: true
-            }
+            name: 'Administrador',
+            code: '1'
         },
         {
-            label: 'Natural',
-            value: '1'
-        },
-        {
-            label: 'Jurídico',
-            value: '2'
+            name: 'Usuario',
+            code: '2'
         }
     ])
 
-    const handleSubmit = async (formData : IClient) => {
-        await composable.register(formData)
+    const handleSubmit = async (formData : ISupplier) => {
+        await composable.registerSupplier(formData)
     }
 </script>
 
 <template>
     <div class="w-full custom-2 bg-white border-round shadow-1 px-5 mt-3 pb-3 md:pb-0">
         <div class="md:flex mb-5 justify-content-between pt-2">
-            <h1 class="text-2xl md:text-3xl text-800">Registro de clientes</h1>
+            <h1 class="text-2xl md:text-3xl text-800">Registro de proveedores</h1>
             <IBreadcrumb
                 :home="home"
                 :items="items"
@@ -53,7 +46,7 @@
         <div class="pm-4">
 
             <FormKit
-                id="form-client-new"
+                id="form-supplier-new"
                 type="form"
                 :actions="false"
                 incomplete-message="Revisa las notificaciones"
@@ -63,37 +56,36 @@
                     <div class="field col-12 md:col-6 lg:col-4">
                         <FormKit
                             type="text"
-                            label="Nombres/Razón Social"
-                            name="name"
-                            placeholder="Nombre"
+                            label="Razón Social"
+                            name="social_reason"
+                            placeholder="Razón social"
                             validation="required"
                             :validation-messages="{
-                                required: 'El nombre y/o razón social es obligatorio'
-                            }"
-                        />
-                    </div>
-                    <div class="field col-12 md:col-6 lg:col-4">
-                        <FormKit
-                            type="select"
-                            label="Tipo cliente"
-                            name="type"
-                            :options="options"
-                            validation="required"
-                            validation-visibility="dirty"
-                            :validation-messages="{
-                                required: 'Seleccione un tipo de cliente'
+                                required: 'La razón social es obligatorio'
                             }"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
                         <FormKit
                             type="text"
-                            label="Documento (DNI/RUC)"
-                            name="doc"
-                            placeholder="DNI/RUC"
+                            label="Representante"
+                            name="representative"
+                            placeholder="Representante"
                             validation="required"
                             :validation-messages="{
-                                required: 'El documento es obligatorio'
+                                required: 'El representante es obligatorio'
+                            }"
+                        />
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-4">
+                        <FormKit
+                            type="text"
+                            label="Teléfono"
+                            name="phono"
+                            placeholder="000 000 000"
+                            validation="required"
+                            :validation-messages="{
+                                required: 'El teléfono es obligatorio'
                             }"
                         />
                     </div>
@@ -108,9 +100,9 @@
                     <div class="field col-12 md:col-6 lg:col-4">
                         <FormKit
                             type="text"
-                            label="N° celular"
-                            name="phone"
-                            placeholder="Dirección"
+                            label="Email"
+                            name="email"
+                            placeholder="Email"
                         />
                     </div>
                 </div>
@@ -121,7 +113,6 @@
                     class="block"
                 />
             </FormKit>
-
         </div>
     </div>
 </template>

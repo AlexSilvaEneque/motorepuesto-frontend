@@ -24,6 +24,18 @@
             command: () => changeToggle()
         },
         {
+            label: 'Productos',
+            icon: 'pi pi-qrcode',
+            to: '/productos',
+            command: () => changeToggle()
+        },
+        {
+            label: 'Servicios',
+            icon: 'pi pi-wrench',
+            to: '/servicios',
+            command: () => changeToggle()
+        },
+        {
             label: 'Roles',
             icon: 'pi pi-briefcase',
             to: '/roles',
