@@ -40,6 +40,7 @@
                 :actions="false"
                 incomplete-message="Revisa las notificaciones"
                 @submit="handleSubmit"
+                :onInput="() => {}"
             >
                 <div class="formgrid grid">
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -52,6 +53,7 @@
                             :validation-messages="{
                                 required: 'El nombre del rol es obligatorio'
                             }"
+                            :onInput="() => {}"
                         />
                     </div>
                 </div>

@@ -18,6 +18,7 @@
                 :actions="false"
                 incomplete-message="Hay errores al llenar los campos."
                 @submit="handleSubmit"
+                :onInput="() => {}"
             >
             <div class="formgrid grid">
                 <div class="col-12">
@@ -31,6 +32,7 @@
                             required: 'El campo email es obligatorio',
                             email: 'La cadena ingresada no es un email válido'
                         }"
+                        :onInput="() => {}"
                     />
                 </div>
                 <div class="col-12">
@@ -43,12 +45,14 @@
                         :validationMessages="{
                             required: 'La contraseña es obligatoria'
                         }"
+                        :onInput="() => {}"
                     />
                 </div>
                 </div>
                 <FormKit
                     type="submit"
                     label="Iniciar sesión"
+                    :onInput="() => {}"
                 />
             </FormKit>
     </div>

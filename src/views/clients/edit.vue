@@ -69,6 +69,7 @@
                     :actions="false"
                     incomplete-message="Revisa las notificaciones"
                     @submit="handleSubmit"
+                    :onInput="() => {}"
                 >
                     <div class="formgrid grid">
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -82,6 +83,7 @@
                                 :validation-messages="{
                                     required: 'El nombre y/o razón social es obligatorio'
                                 }"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -92,10 +94,11 @@
                                 :options="options"
                                 validation="required"
                                 validation-visibility="dirty"
-                                :value="client.type"
+                                :value="client.type.toString()"
                                 :validation-messages="{
                                     required: 'Seleccione un tipo de cliente'
                                 }"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -109,6 +112,7 @@
                                 :validation-messages="{
                                     required: 'El documento es obligatorio'
                                 }"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -118,6 +122,7 @@
                                 name="address"
                                 placeholder="Dirección"
                                 :value="client.address"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -127,6 +132,7 @@
                                 name="phone"
                                 placeholder="000-000-000"
                                 :value="client.phone"
+                                :onInput="() => {}"
                             />
                         </div>
                     </div>

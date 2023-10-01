@@ -18,15 +18,15 @@
             command: () => changeToggle()
         },
         {
-            label: 'Proveedores',
-            icon: 'pi pi-truck',
-            to: '/proveedores',
+            label: 'Productos',
+            icon: 'pi pi-qrcode',
+            to: '/productos',
             command: () => changeToggle()
         },
         {
-            label: 'Usuarios',
-            icon: 'pi pi-users',
-            to: '/usuarios',
+            label: 'Servicios',
+            icon: 'pi pi-wrench',
+            to: '/servicios',
             command: () => changeToggle()
         },
         {

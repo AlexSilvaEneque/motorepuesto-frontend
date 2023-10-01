@@ -55,6 +55,7 @@
                 :actions="false"
                 incomplete-message="Revisa las notificaciones"
                 @submit="handleSubmit"
+                :onInput="() => {}"
             >
                 <div class="formgrid grid">
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -67,6 +68,7 @@
                             :validation-messages="{
                                 required: 'El nombre es obligatorio'
                             }"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -79,6 +81,7 @@
                             :validation-messages="{
                                 required: 'El apellido es obligatorio'
                             }"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -92,6 +95,7 @@
                                 required: 'El email es obligatorio',
                                 email: 'Email no válido'
                             }"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -100,6 +104,7 @@
                             label="Nombre de usuario"
                             name="username"
                             placeholder="Tu nombre de usuario"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -108,6 +113,7 @@
                             label="N° celular"
                             name="phone"
                             placeholder="000 000 000"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -122,6 +128,7 @@
                             :validation-messages="{
                                 required: 'Seleccione un rol'
                             }"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -130,6 +137,7 @@
                             name="password"
                             label="Password"
                             validation="required"
+                            :onInput="() => {}"
                         />
                     </div>
                 </div>

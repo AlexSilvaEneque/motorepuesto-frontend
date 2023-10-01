@@ -38,6 +38,7 @@
                 :actions="false"
                 incomplete-message="Revisa las notificaciones"
                 @submit="handleSubmit"
+                :onInput="() => {}"
             >
                 <template v-if="userEdit">
                     <div class="formgrid grid">
@@ -51,6 +52,7 @@
                                 :validation-messages="{
                                     required: 'El nombre es obligatorio'
                                 }"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -63,6 +65,7 @@
                                 :validation-messages="{
                                     required: 'El nombre es obligatorio'
                                 }"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -77,6 +80,7 @@
                                     required: 'El email es obligatorio',
                                     email: 'Email no válido'
                                 }"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -86,6 +90,7 @@
                                 name="username"
                                 :value="userEdit.username"
                                 placeholder="Tu nombre de usuario"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -95,6 +100,7 @@
                                 name="phone"
                                 :value="userEdit.phone"
                                 placeholder="000 000 000"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -102,6 +108,7 @@
                                 type="password"
                                 name="password"
                                 label="Password"
+                                :onInput="() => {}"
                             />
                         </div>
                     </div>

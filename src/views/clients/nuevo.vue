@@ -58,6 +58,7 @@
                 :actions="false"
                 incomplete-message="Revisa las notificaciones"
                 @submit="handleSubmit"
+                :onInput="() => {}"
             >
                 <div class="formgrid grid">
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -70,6 +71,7 @@
                             :validation-messages="{
                                 required: 'El nombre y/o razón social es obligatorio'
                             }"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -83,6 +85,7 @@
                             :validation-messages="{
                                 required: 'Seleccione un tipo de cliente'
                             }"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -95,6 +98,7 @@
                             :validation-messages="{
                                 required: 'El documento es obligatorio'
                             }"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -103,6 +107,7 @@
                             label="Dirección"
                             name="address"
                             placeholder="Dirección"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -111,6 +116,7 @@
                             label="N° celular"
                             name="phone"
                             placeholder="Dirección"
+                            :onInput="() => {}"
                         />
                     </div>
                 </div>

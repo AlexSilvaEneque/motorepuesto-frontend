@@ -50,6 +50,7 @@
                     :actions="false"
                     incomplete-message="Revisa las notificaciones"
                     @submit="handleSubmit"
+                    :onInput="() => {}"
                 >
                     <div class="formgrid grid">
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -63,6 +64,7 @@
                                 :validation-messages="{
                                     required: 'La razón social es obligatorio'
                                 }"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -76,6 +78,7 @@
                                 :validation-messages="{
                                     required: 'El representante es obligatorio'
                                 }"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -89,6 +92,7 @@
                                 :validation-messages="{
                                     required: 'El teléfono es obligatorio'
                                 }"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -98,6 +102,7 @@
                                 name="address"
                                 placeholder="Dirección"
                                 :value="supplierEdit.address"
+                                :onInput="() => {}"
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
@@ -107,6 +112,7 @@
                                 name="email"
                                 placeholder="Email"
                                 :value="supplierEdit.email"
+                                :onInput="() => {}"
                             />
                         </div>
                     </div>
