@@ -6,7 +6,6 @@
     import { useConfirm } from "primevue/useconfirm";
     import { getSeverityStatus } from '../../utils/index';
     import IBreadcrumb from "@/components/UI/IBreadcrumb.vue";
-    import Loading from "@/components/UI/Loading.vue";
 
     const router = useRouter()
     const composable = useClient()
@@ -184,8 +183,32 @@
                 <Tag :value="client.status ? 'Habilitado' : 'Inhabilitado'" :severity="getSeverityStatus(client)" />
             </div>
         </div>
-        <div v-else>
-            <Loading />
+
+        <div v-else class="grid">
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Nombre/Razón social:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Tipo cliente:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Documento:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Dirección:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Teléfono:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Estado:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
         </div>
     </Dialog>
 

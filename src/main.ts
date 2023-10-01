@@ -18,6 +18,7 @@ import Dialog from 'primevue/dialog'
 import ConfirmDialog from 'primevue/confirmdialog'
 import ConfirmationService from 'primevue/confirmationservice'
 import Tag from 'primevue/tag'
+import Skeleton from 'primevue/skeleton'
 
 import { useToast } from 'vue-toast-notification'
 
@@ -58,5 +59,6 @@ app.component("Sidebar", Sidebar)
 app.component("Dialog", Dialog)
 app.component("ConfirmDialog", ConfirmDialog)
 app.component("Tag", Tag)
+app.component("Skeleton", Skeleton)
 // app.component("Toast", Toast)
 app.mount('#app')

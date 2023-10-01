@@ -1,12 +1,12 @@
 <script setup lang="ts">
     import { ref, computed, onMounted, watch, inject, type Ref } from "vue"
-    import IBreadcrumb from '@/components/UI/IBreadcrumb.vue'
-    import Loading from "@/components/UI/Loading.vue"
     import { useRouter } from "vue-router"
     import useUser from "@/composables/user"
     import type { IRUser } from '../../interfaces/index'
     import { useConfirm } from "primevue/useconfirm"
     import { useUserStore } from '../../stores/user'
+    import { getSeverityStatus } from "@/utils"
+    import IBreadcrumb from '@/components/UI/IBreadcrumb.vue'
 
     const userStore = useUserStore()
 
@@ -190,12 +190,39 @@
             </div>
             <div class="col-12 grid">
                 <p class="font-medium mr-2 col-4">Estado:</p>
-                <span class="col">{{ user.status ? 'Habilitado' : 'Inhabilitado' }}</span>
+                <Tag :value="user.status ? 'Habilitado' : 'Inhabilitado'" :severity="getSeverityStatus(user)" />
             </div>
         </div>
-        <p v-else>
-            <Loading />
-        </p>
+        <div v-else>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Nombre:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Apellidos:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Email:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Username:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Celular:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Rol:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Estado:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+        </div>
     </Dialog>
 
     <ConfirmDialog group="positionDialog" />

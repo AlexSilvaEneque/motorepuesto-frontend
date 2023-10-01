@@ -6,7 +6,6 @@
     import { useConfirm } from 'primevue/useconfirm';
     import { formatCurrency, getSeverityStatus } from '../../utils/index';
     import IBreadcrumb from '@/components/UI/IBreadcrumb.vue';
-    import Loading from '@/components/UI/Loading.vue';
     
     const router = useRouter()
     const composable = useProduct()
@@ -182,8 +181,23 @@
                 <Tag :value="product.status ? 'Habilitado' : 'Inhabilitado'" :severity="getSeverityStatus(product)" />
             </div>
         </div>
-        <div v-else>
-            <Loading />
+        <div v-else class="grid">
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Nombre:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Cantidad:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Precio:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Estado:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
         </div>
     </Dialog>
 

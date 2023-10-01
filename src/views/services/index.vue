@@ -6,7 +6,6 @@
     import { useConfirm } from "primevue/useconfirm";
     import { getSeverityStatus, formatCurrency } from "@/utils";
     import IBreadcrumb from "@/components/UI/IBreadcrumb.vue";
-    import Loading from '@/components/UI/Loading.vue';
 
     const router = useRouter()
     const composable = useService()
@@ -65,6 +64,12 @@
             }
         })
     }
+
+    watch(visible, () => {
+        if (!visible) {
+            service.value = null
+        }
+    }, { deep: true })
 
     onMounted(async () => {
         services.value = await composable.allServices()
@@ -163,8 +168,19 @@
                 <Tag :value="service.status ? 'Habilitado' : 'Inhabilitado'" :severity="getSeverityStatus(service)" />
             </div>
         </div>
-        <div v-else>
-            <Loading />
+        <div v-else class="grid">
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Nombre:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Precio:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
+            <div class="col-12 grid">
+                <p class="font-medium mr-2 col-4">Estado:</p>
+                <span class="col"><Skeleton></Skeleton></span>
+            </div>
         </div>
     </Dialog>
 
