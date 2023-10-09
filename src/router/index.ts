@@ -103,11 +103,11 @@ const router = createRouter({
           name: 'new-sale',
           component: () => import('../views/sales/nuevo.vue')
         },
-        {
-          path: 'ventas/edit/:id',
-          name: 'edit-sale',
-          component: () => import('../views/sales/edit.vue')
-        },
+        // {
+        //   path: 'ventas/edit/:id',
+        //   name: 'edit-sale',
+        //   component: () => import('../views/sales/edit.vue')
+        // },
 
         {
           path: 'roles',
