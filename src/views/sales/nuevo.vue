@@ -43,8 +43,8 @@
         // console.log(formData)
     }
 
-    const searchProduct = async (id : string) => {
-        cartStore.productSelected = await productComp.getById(id)
+    const searchProduct = async (id : string | unknown) => {
+        cartStore.productSelected = await productComp.getById(<string>id)
         qty.value = cartStore.productSelected!.quantity as number
         price.value = cartStore.productSelected!.price!.$numberDecimal
     }

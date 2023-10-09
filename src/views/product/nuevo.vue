@@ -25,7 +25,7 @@
         {label: 'Servicio', value: 2},
     ]
 
-    const validType = (value : number) => {
+    const validType = (value : number | unknown) => {
         if (value === 1) {
             isProduct.value = true
         }

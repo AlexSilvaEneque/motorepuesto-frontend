@@ -94,7 +94,7 @@
                                 :options="options"
                                 validation="required"
                                 validation-visibility="dirty"
-                                :value="client.type.toString()"
+                                :value="client.type?.toString()"
                                 :validation-messages="{
                                     required: 'Seleccione un tipo de cliente'
                                 }"
