@@ -29,10 +29,16 @@
             to: '/productos',
             command: () => changeToggle()
         },
+        // {
+        //     label: 'Servicios',
+        //     icon: 'pi pi-wrench',
+        //     to: '/servicios',
+        //     command: () => changeToggle()
+        // },
         {
-            label: 'Servicios',
-            icon: 'pi pi-wrench',
-            to: '/servicios',
+            label: 'Ventas',
+            icon: 'pi pi-money-bill',
+            to: '/ventas',
             command: () => changeToggle()
         },
         {

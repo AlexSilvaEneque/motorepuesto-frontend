@@ -9,6 +9,7 @@
     const composable = useProduct()
 
     const productEdit = ref<IProduct>()
+    const isProduct = ref<boolean>(false)
 
     const home = ref({
         label: 'Productos',
@@ -21,6 +22,21 @@
             icon: 'pi pi-fw pi-pencil'
         }
     ])
+
+    const options = [
+        {label: 'Selecciona', value: 0, attrs: { disabled: true }},
+        {label: 'Producto', value: 1},
+        {label: 'Servicio', value: 2},
+    ]
+
+    const validType = (value : number) => {
+        if (value === 1) {
+            isProduct.value = true
+        }
+        if (value === 2) {
+            isProduct.value = false
+        }
+    }
 
     const handleSubmit = async (formData:IProduct) => {
         const { id } = route.params
@@ -75,7 +91,7 @@
                                 placeholder="00.00"
                                 validation="required | number"
                                 validation-visibility="dirty"
-                                :value="productEdit.price.$numberDecimal.toString()"
+                                :value="productEdit.price!.$numberDecimal.toString()"
                                 :validation-messages="{
                                     required: 'El precio es obligatorio',
                                     number: 'Debe ingresar un valor válido'
@@ -84,6 +100,23 @@
                             />
                         </div>
                         <div class="field col-12 md:col-6 lg:col-4">
+                            <FormKit
+                                type="select"
+                                label="Tipo"
+                                name="type"
+                                :options="options"
+                                :value="productEdit.type"
+                                validation="required"
+                                validation-visibility="dirty"
+                                :validation-messages="{
+                                    required: 'Seleccione un tipo'
+                                }"
+                                :onInput="(e) => {
+                                    validType(e)
+                                }"
+                            />
+                        </div>
+                        <div class="field col-12 md:col-6 lg:col-4" v-if="isProduct">
                             <FormKit
                                 type="number"
                                 label="Cantidad"

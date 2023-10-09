@@ -5,6 +5,7 @@
     import IBreadcrumb from "@/components/UI/IBreadcrumb.vue";
 
     const composable = useProduct()
+    const isProduct = ref<boolean>(false)
 
     const home = ref({
         label: 'Productos',
@@ -17,6 +18,21 @@
             icon: 'pi pi-fw pi-plus-circle'
         }
     ])
+
+    const options = [
+        {label: 'Selecciona', value: 0, attrs: { disabled: true }},
+        {label: 'Producto', value: 1},
+        {label: 'Servicio', value: 2},
+    ]
+
+    const validType = (value : number) => {
+        if (value === 1) {
+            isProduct.value = true
+        }
+        if (value === 2) {
+            isProduct.value = false
+        }
+    }
 
     const handleSubmit = async (formData:IProduct) => {
         await composable.register(formData)
@@ -73,15 +89,31 @@
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
                         <FormKit
+                          type="select"
+                          label="Tipo"
+                          name="type"
+                          :options="options"
+                          validation="required"
+                          validation-visibility="dirty"
+                          :validation-messages="{
+                              required: 'Seleccione un tipo'
+                          }"
+                          :onInput="(e) => {
+                            validType(e)
+                          }"
+                        />
+                    </div>
+                    <div class="field col-12 md:col-6 lg:col-4" v-if="isProduct">
+                        <FormKit
                             type="number"
                             label="Cantidad"
                             name="quantity"
                             number="integer"
                             placeholder="0"
                             validation="required"
-                            :validation-messages="{
-                                required: 'La cantidad es obligatoria'
-                            }"
+                                :validation-messages="{
+                                    required: 'La cantidad es obligatoria'
+                                }"
                             :onInput="() => {}"
                         />
                     </div>
@@ -97,8 +129,3 @@
         </div>
     </div>
 </template>
-<style scoped>
-.h-custom {
-    height: 40px;
-}
-</style>

@@ -33,22 +33,30 @@ export interface IRRol {
 
 export interface IClient {
     _id?: string
-    name: string
-    type: number
-    doc: string
+    name?: string
+    type?: number
+    doc?: string
     address?: string
     phone?: string
     status?: boolean
+    label?: string
+    value?: string
 }
 
 export interface IProduct {
     _id?: string
-    name: string
-    price: {
+    name?: string
+    price?: {
         $numberDecimal: number
     }
-    quantity: number
+    type?: number
+    quantity?: number
     status?: boolean
+    label?: string
+    value?: string
+    attrs?: {
+        disabled: boolean
+    }
 }
 
 export interface ISupplier {
@@ -68,4 +76,42 @@ export interface IService {
         $numberDecimal: number
     }
     status?: boolean
+}
+
+interface DetailProduct {
+    quantity: number,
+    products: IProduct | string
+}
+
+interface DetailService {
+    quantity: number,
+    products: IService | string
+}
+
+export interface ISale {
+    _id?: string
+    payment_type: string
+    tax?: {
+        $numberDecimal: number
+    },
+    total: {
+        $numberDecimal: number
+    },
+    discount?: {
+        $numberDecimal: number
+    }
+    status?: boolean
+    date: Date
+    detailProducts?: DetailProduct[] | any
+    detailServices?: DetailService[]
+    user: IRUser | string
+    client: IClient | string
+}
+
+export interface ICartSale {
+    quantity: number
+    price: number
+    name?: string
+    products?: string
+    // id: string
 }

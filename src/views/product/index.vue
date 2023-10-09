@@ -55,9 +55,11 @@
     }
 
     const getSeverity = (product : IProduct) : string => {
-        if (product.quantity === 0) return 'danger'
+        if (product.quantity === 0 && product.type === 1) return 'danger'
+            
+        if (product.quantity === 0 && product.type === 2) return 'primary-100'
 
-        if (product.quantity > 0 && product.quantity <= 10) return 'warning'
+        if (product.quantity! > 0 && product.quantity! <= 10) return 'warning'
 
         return 'success'
     }
@@ -88,7 +90,7 @@
 <template>
     <div class="w-full custom-2 bg-white border-round shadow-1 px-1 md:px-5 mt-3">
         <div class="md:flex md:mb-3 justify-content-between pt-2">
-            <h1 class="text-2xl md:text-3xl text-800">Lista de productos</h1>
+            <h1 class="text-2xl md:text-3xl text-800">Lista de productos y servicios</h1>
             <IBreadcrumb
                 :home="current"
             />
@@ -96,7 +98,7 @@
         <div class="w-full">
             <div class="md:flex justify-content-end mb-3">
                 <Button
-                    label="Registrar producto"
+                    label="Registrar producto/servicio"
                     class="bg-primary no-underline text-sm md:text-md lg:text-base md:font-medium"
                     icon="pi pi-plus-circle"
                     @click="goToView"
@@ -129,7 +131,7 @@
                 </Column>
                 <Column header="Cantidad">
                     <template #body="props">
-                        <Tag :value="`${props.data.quantity} en stock`" :severity="getSeverity(props.data)" />
+                        <Tag :value="props.data.type === 1 ? `${props.data.quantity} en stock` : 'Servicio'" :severity="getSeverity(props.data)" />
                     </template>
                 </Column>
                 <Column header="Opciones">
@@ -162,19 +164,19 @@
             </DataTable>
         </div>
     </div>
-    <Dialog v-model:visible="visible" modal header="Detalle Producto">
+    <Dialog v-model:visible="visible" modal header="Detalle Producto" :style="{ width: '50vw' }" :breakpoints="{ '960px': '75vw', '641px': '100vw' }">
         <div class="grid" v-if="product && !loading">
             <div class="col-12 grid">
                 <p class="font-medium mr-2 col-4">Nombre:</p>
                 <span class="col">{{ product.name }}</span>
             </div>
-            <div class="col-12 grid">
+            <div class="col-12 grid" v-if="product.type === 1">
                 <p class="font-medium mr-2 col-4">Cantidad:</p>
                 <span class="col">{{ product.quantity }}</span>
             </div>
             <div class="col-12 grid">
                 <p class="font-medium mr-2 col-4">Precio:</p>
-                <span class="col">{{ formatCurrency(Number(product.price.$numberDecimal)) }}</span>
+                <span class="col">{{ formatCurrency(Number(product.price!.$numberDecimal)) }}</span>
             </div>
             <div class="col-12 grid">
                 <p class="font-medium mr-2 col-4">Estado:</p>

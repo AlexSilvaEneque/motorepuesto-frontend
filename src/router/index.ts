@@ -94,6 +94,22 @@ const router = createRouter({
         },
 
         {
+          path: 'ventas',
+          name: 'index-sale',
+          component: () => import('../views/sales/index.vue')
+        },
+        {
+          path: 'ventas/nuevo',
+          name: 'new-sale',
+          component: () => import('../views/sales/nuevo.vue')
+        },
+        {
+          path: 'ventas/edit/:id',
+          name: 'edit-sale',
+          component: () => import('../views/sales/edit.vue')
+        },
+
+        {
           path: 'roles',
           name: 'index-roles',
           meta: {

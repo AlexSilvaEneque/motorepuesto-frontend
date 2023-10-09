@@ -80,9 +80,9 @@
 
     onMounted(async () => {
         users.value = await composable.allUser()
-        users.value = users.value.map((user, index) => {
-            return { ...user, id: index + 1 }
-        })
+        // users.value = users.value.map((user, index) => {
+        //     return { ...user, id: index + 1 }
+        // })
     })
 
 </script>
@@ -127,9 +127,12 @@
                     </p>
                 </template>
 
-                <Column field="id" header="ID" sortable />
                 <Column field="first_name" header="Nombre" sortable />
-                <!-- <Column field="last_name" header="Apellidos" sortable /> -->
+                <Column header="Rol" sortable >
+                    <template #body="prop">
+                        {{ prop.data.role.description }}
+                    </template>
+                </Column>
                 <Column field="email" header="Email" sortable />
                 <Column header="Opciones">
                     <template #body="slotProps">
