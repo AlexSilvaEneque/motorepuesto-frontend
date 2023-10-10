@@ -1,12 +1,14 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import { RouterLink, RouterView } from 'vue-router'
+  import ReloadPrompt from './components/ReloadPrompt.vue';
 
 </script>
 
 <template>
   <div class="surface-50">
     <RouterView />
+    <ReloadPrompt />
   </div>
 </template>
 
