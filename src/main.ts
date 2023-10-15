@@ -8,6 +8,7 @@ import Menu from 'primevue/menu'
 import InputMask from 'primevue/inputmask'
 import Password from 'primevue/password'
 import InputText from 'primevue/inputtext'
+import InputNumber from 'primevue/inputnumber'
 import Breadcrumb from 'primevue/breadcrumb'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
@@ -60,5 +61,6 @@ app.component("Dialog", Dialog)
 app.component("ConfirmDialog", ConfirmDialog)
 app.component("Tag", Tag)
 app.component("Skeleton", Skeleton)
+app.component("InputNumber", InputNumber)
 // app.component("Toast", Toast)
 app.mount('#app')

@@ -29,18 +29,34 @@ export default function useSale() {
             ...formData,
             detailProducts: cartStore.cart
         }
+
+        if (cartStore.cart.length === 0) {
+            console.log('entra')
+            toast.open({
+                message: 'Agregue productos al carrito',
+                type: 'error'
+            })
+            return
+        }
+
         try {
             const { data } = await saleAPI.registerSale(send)
+            
             toast.open({
                 message: data.msg,
                 type: 'success'
             })
-            router.push({ name: 'index-sale' })
+            // router.push({ name: 'index-sale' })
+
+            // ir a la pasarela
+            router.push({ name: 'payment', params: { id: data.id } })
         } catch (error:any) {
             toast.open({
                 message: error.response.data.msg,
                 type: 'error'
             })
+        } finally {
+            cartStore.$resetAll()
         }
     }
 

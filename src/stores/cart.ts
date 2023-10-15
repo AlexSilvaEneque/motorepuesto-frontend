@@ -26,6 +26,13 @@ export const useCartStore = defineStore('cart', () => {
         productSelected.value = null
     }
 
+    function $resetAll() {
+        productSelected.value = null
+        cart.value = []
+        subtotal.value = 0
+        total.value = 0
+    }
+
     watchEffect(() => {
         subtotal.value = cart.value.reduce((total, item) => total + (item.price * item.quantity), 0)
         total.value = subtotal.value
@@ -37,6 +44,7 @@ export const useCartStore = defineStore('cart', () => {
         cart,
         addCartSale,
         deleteItem,
-        $reset
+        $reset,
+        $resetAll
     }
 })

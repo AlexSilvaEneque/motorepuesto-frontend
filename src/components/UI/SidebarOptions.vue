@@ -64,5 +64,5 @@
 </script>
 
 <template>
-    <Menu :model="items" style="border: none; width: auto;" class="text-sm lg:text-lg" />
+    <Menu :model="items" style="border: none; width: auto;" class="text-lg" />
 </template>

@@ -38,9 +38,7 @@
     ])
 
     const handleSubmit = async (formData : ISale) => {
-        console.log(formData)
         await saleComp.registerSale(formData)
-        // console.log(formData)
     }
 
     const searchProduct = async (id : string | unknown) => {
@@ -77,7 +75,7 @@
 </script>
 
 <template>
-<div class="w-full custom-2 bg-white border-round shadow-1 px-5 mt-3 pb-3 md:pb-0">
+    <div class="w-full custom-2 bg-white border-round shadow-1 px-5 mt-3 pb-3 md:pb-0">
         <div class="md:flex mb-5 justify-content-between pt-2">
             <h1 class="text-2xl md:text-3xl text-800">Registro de venta</h1>
             <IBreadcrumb
@@ -115,12 +113,17 @@
                   </div>
                   <div class="field col-12 md:col-6 lg:col-6">
                       <FormKit
-                          type="text"
+                          type="select"
                           label="Medio de pago"
                           name="payment_type"
                           validation="required"
+                          :options="[
+                            { label: 'Selecciona un medio de pago', value: '0', attrs: { selected: true, disabled: true } },
+                            { label: 'Efectivo', value: '1' },
+                            // { label: 'Pago en línea', value: '2' }
+                          ]"
                           :validation-messages="{
-                              required: 'El precio es obligatorio'
+                              required: 'Selecciona un medio de pago'
                           }"
                           :onInput="() => {}"
                       />
@@ -161,7 +164,7 @@
                   <div class="field col-12 md:col-6 lg:col-2">
                       <FormKit
                           type="number"
-                          label="Cantidad solicitada"
+                          label="Cantidad"
                           name="quantityP"
                           validation="required"
                           v-model="(qtyRes as any)"
@@ -178,7 +181,7 @@
                     />
                   </div>
                   <h3 class="block col-12 mb-2">Detalle venta</h3>
-                    <DataTable :value="cartStore.cart" class="p-datatable-sm" style="width: 100%;" >
+                    <DataTable :value="cartStore.cart" class="p-datatable-sm width-detail-table1" >
                         <Column header="Producto" class="hidden">
                             <template #body="prop">
                                 {{ prop.data.products }}

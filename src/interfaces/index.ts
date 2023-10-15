@@ -78,7 +78,7 @@ export interface IService {
     status?: boolean
 }
 
-interface DetailProduct {
+export interface DetailProduct {
     quantity: number,
     products: IProduct | string
 }
@@ -106,6 +106,7 @@ export interface ISale {
     detailServices?: DetailService[]
     user: IRUser | string
     client: IClient | string
+    statusPayment?: boolean
 }
 
 export interface ICartSale {
@@ -114,4 +115,11 @@ export interface ICartSale {
     name?: string
     products?: string
     // id: string
+}
+
+export interface ICreateOrder {
+    title: string
+    unit_price: number
+    currency_id: string
+    quantity: number
 }

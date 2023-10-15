@@ -46,6 +46,7 @@
     onMounted(async () => {
         const { id } = route.params
         productEdit.value = await composable.getById(<string>id)
+        validType(productEdit.value?.type)
     })
 </script>
 

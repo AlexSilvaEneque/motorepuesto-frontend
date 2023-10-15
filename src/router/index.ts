@@ -15,6 +15,17 @@ const router = createRouter({
       },
       children: [
         {
+          path: 'payment/:id',
+          name: 'payment',
+          component: () => import('../views/payment/index.vue')
+        },
+        {
+          path: 'payment/verify',
+          name: 'payment-verify',
+          component: () => import('../views/payment/verify.vue')
+        },
+
+        {
           path: '',
           name: 'dashboard',
           component: () => import('../views/Dashboard.vue')

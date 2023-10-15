@@ -6,6 +6,7 @@
     import { useConfirm } from "primevue/useconfirm"
     import { getSeverityStatus } from "@/utils"
     import IBreadcrumb from '@/components/UI/IBreadcrumb.vue'
+    import QrcodeVue from 'qrcode.vue'
     import { convertoDDMMYYYY } from '../../utils/date';
     import { formatCurrency } from '../../utils/index';
 
@@ -19,6 +20,7 @@
     const visible = ref(false)
     const sale = ref<ISale | null>()
     const loading = ref(false)
+    const linkQr = ref<string>()
 
     const current = ref({
         label: 'Ventas',
@@ -39,6 +41,8 @@
       }
     })
 
+    // const linkQr = computed<string>(() => sale.value?.statusPayment ? : )
+
     const goToView = () => {
         router.push({ name: 'new-sale' })
     }
@@ -47,6 +51,7 @@
         visible.value = true
         loading.value = true
         sale.value = await composable.getSaleById(id)
+        linkQr.value = import.meta.env.VITE_URL_FRONT + 'payment/' + sale.value?._id
         loading.value = false
     }
 
@@ -143,7 +148,7 @@
 
                 <Column header="Estado" sortable >
                     <template #body="prop">
-                        <Tag :value="prop.data.status ? 'Habilitado' : 'Eliminado'" :severity="getSeverityStatus(prop.data)" />
+                        <Tag :value="prop.data.statusPayment ? 'Pagada' : 'Pendiente de pago'" :severity="getSeverityStatus(prop.data)" />
                     </template>
                 </Column>
                 
@@ -180,35 +185,63 @@
     </div>
 
     <Dialog v-model:visible="visible" modal header="Detalle de la venta">
-        <div class="grid" v-if="sale && !loading">
-            <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Fecha:</p>
-                <span class="col">{{ convertoDDMMYYYY(sale.date) }}</span>
+        <div class="" v-if="sale && !loading">
+            <div class="lg:flex lg:justify-content-between lg:flex-wrap">
+                <div class="lg:flex-1">
+                    <div class="col-12 grid">
+                        <p class="font-medium mr-2 col-6">Fecha:</p>
+                        <span class="col">{{ convertoDDMMYYYY(sale.date) }}</span>
+                    </div>
+                    <div class="col-12 grid">
+                        <p class="font-medium mr-2 col-6">Cliente:</p>
+                        <span class="col">
+                            {{ typeof sale.client !== 'string' ? sale.client.name : '' }}
+                        </span>
+                    </div>
+                    <!-- <div class="col-12 grid">
+                        <p class="font-medium mr-2 col-6">Medio de pago:</p>
+                        <span class="col">{{ sale.payment_type }}</span>
+                    </div> -->
+                    <div class="col-12 grid">
+                        <p class="font-medium mr-2 col-6">Vendedor:</p>
+                        <span class="col">
+                            {{ typeof sale.user !== 'string' ? sale.user.first_name : '' }}
+                        </span>
+                    </div>
+                    <div class="col-12 grid">
+                        <p class="font-medium mr-2 col-6">Estado:</p>
+                        <Tag :value="sale.statusPayment ? 'Pagada' : 'Pendiente de pago'" :severity="getSeverityStatus(sale)" />
+                    </div>
+                </div>
+                <div class="flex flex-column justify-content-center">
+                    <template v-if="sale.statusPayment">
+                        <h5 class="text-center mb-1">Scanee el QR</h5>
+                        <div class="w-full text-center">
+                            <QrcodeVue :value="linkQr" level="H" :size="100" render-as="svg" />
+                        </div>
+                        <h5>o click en el botón</h5>
+                        <Button
+                            type="button"
+                            class="mt-1"
+                            label="Boleta"
+                            size="small"
+                            @click="$router.push({ name: 'payment', params: { id: sale._id } })"
+                        />
+                    </template>
+                    <Button v-else
+                        type="button"
+                        class="mt-1"
+                        label="Pagar"
+                        size="small"
+                        @click="$router.push({ name: 'payment', params: { id: sale._id } })"
+                    />
+                </div>
             </div>
-            <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Cliente:</p>
-                <span class="col">
-                    {{ typeof sale.client !== 'string' ? sale.client.name : '' }}
-                </span>
-            </div>
-            <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Método de pago:</p>
-                <span class="col">{{ sale.payment_type }}</span>
-            </div>
-            <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Vendedor:</p>
-                <span class="col">
-                    {{ typeof sale.user !== 'string' ? sale.user.first_name : '' }}
-                </span>
-            </div>
-            <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Estado:</p>
-                <Tag :value="sale.status ? 'Habilitada' : 'Eliminada'" :severity="getSeverityStatus(sale)" />
-            </div>
-            <div class="col-12">
-                <h4 class="mb-1">Detalle de la venta</h4>
+
+            <div class="w-full">
+                <h4 class="mb-1 mt-1">Detalle de la venta</h4>
                 <template v-if="sale.detailProducts">
-                    <DataTable :value="sale.detailProducts" class="p-datatable-sm" >
+                    <DataTable :value="sale.detailProducts" class="p-datatable-sm width-detail-table" scrollable scroll-height="200px">
                         <Column header="Producto/Servicio" style="width: auto">
                             <template #body="prop">
                                 {{ prop.data.products.name }}
@@ -234,35 +267,48 @@
                     </DataTable>
                 </template>
                 <div class="w-full flex justify-content-between align-items-center px-1 mt-2">
-                    <h4>Total pagado:</h4>
+                    <h4>Total {{ sale.statusPayment ? 'pagado:' : 'a pagar:' }} </h4>
                     <span class="text-lg font-medium">{{ formatCurrency(Number(sale.total.$numberDecimal)) }}</span>
-                </div>              
+                </div>
             </div>
         </div>
         <div v-else>
-            <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Fecha:</p>
-                <span class="col"><Skeleton></Skeleton></span>
+            <div class="lg:flex lg:justify-content-between lg:flex-wrap">
+                <div class="lg:flex-1">
+                    <div class="col-12 grid">
+                        <p class="font-medium mr-2 col-4">Fecha:</p>
+                        <span class="col"><Skeleton></Skeleton></span>
+                    </div>
+                    <div class="col-12 grid">
+                        <p class="font-medium mr-2 col-4">Cliente:</p>
+                        <span class="col"><Skeleton></Skeleton></span>
+                    </div>
+                    <div class="col-12 grid">
+                        <p class="font-medium mr-2 col-4">Método de pago:</p>
+                        <span class="col"><Skeleton></Skeleton></span>
+                    </div>
+                    <div class="col-12 grid">
+                        <p class="font-medium mr-2 col-4">Vendedor:</p>
+                        <span class="col"><Skeleton></Skeleton></span>
+                    </div>
+                    <div class="col-12 grid">
+                        <p class="font-medium mr-2 col-4">Estado:</p>
+                        <span class="col"><Skeleton></Skeleton></span>
+                    </div>
+                </div>
+                <div class="flex flex-column justify-content-center">
+                    <h5 class="text-center mb-1"><Skeleton></Skeleton></h5>
+                    <div class="w-full text-center">
+                        <Skeleton width="100px" height="100px"></Skeleton>
+                    </div>
+                    <h5 class="mb-1"><Skeleton></Skeleton></h5>
+                    <Skeleton width="100px" height="20px"></Skeleton>
+                </div>
             </div>
-            <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Cliente:</p>
-                <span class="col"><Skeleton></Skeleton></span>
-            </div>
-            <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Método de pago:</p>
-                <span class="col"><Skeleton></Skeleton></span>
-            </div>
-            <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Vendedor:</p>
-                <span class="col"><Skeleton></Skeleton></span>
-            </div>
-            <div class="col-12 grid">
-                <p class="font-medium mr-2 col-4">Estado:</p>
-                <span class="col"><Skeleton></Skeleton></span>
-            </div>
-            <div class="col-12">
+            
+            <div class="w-full">
                 <h4 class="mb-1">Detalle de la venta</h4>
-                <DataTable class="p-datatable-sm" tableStyle="min-width: 50rem">
+                <DataTable class="p-datatable-sm width-detail-table" scrollable scroll-height="200px">
                     <Column header="Producto">
                         <Skeleton></Skeleton>
                     </Column>
