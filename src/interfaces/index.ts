@@ -61,12 +61,14 @@ export interface IProduct {
 
 export interface ISupplier {
     _id?: string
-    social_reason: string
-    representative: string
+    social_reason?: string
+    representative?: string
     address?: string
     email?: string
-    phono: string
+    phono?: string
     status?: boolean
+    label?: string
+    value?: string
 }
 
 export interface IService {
@@ -109,7 +111,27 @@ export interface ISale {
     statusPayment?: boolean
 }
 
+export interface IPurchase {
+    _id?: string
+    total: {
+        $numberDecimal: number
+    },
+    date: Date
+    detailProducts?: DetailProduct[] | any
+    user: IRUser | string
+    supplier: ISupplier | string
+    status?: boolean
+}
+
 export interface ICartSale {
+    quantity: number
+    price: number
+    name?: string
+    products?: string
+    // id: string
+}
+
+export interface ICartPurchase {
     quantity: number
     price: number
     name?: string

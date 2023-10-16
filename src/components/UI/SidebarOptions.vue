@@ -36,6 +36,12 @@
         //     command: () => changeToggle()
         // },
         {
+            label: 'Compras',
+            icon: 'pi pi-cart-plus',
+            to: '/compras',
+            command: () => changeToggle()
+        },
+        {
             label: 'Ventas',
             icon: 'pi pi-money-bill',
             to: '/ventas',

@@ -105,6 +105,17 @@ const router = createRouter({
         },
 
         {
+          path: 'compras',
+          name: 'index-purchase',
+          component: () => import('../views/purchase/index.vue')
+        },
+        {
+          path: 'compras/nuevo',
+          name: 'new-purchase',
+          component: () => import('../views/purchase/nuevo.vue')
+        },
+
+        {
           path: 'ventas',
           name: 'index-sale',
           component: () => import('../views/sales/index.vue')
