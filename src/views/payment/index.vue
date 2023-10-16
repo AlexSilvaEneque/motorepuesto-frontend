@@ -65,7 +65,7 @@
 
 <template>
   <div class="w-full custom-2 bg-white border-round shadow-1 px-5 mt-3 pb-3 md:pb-0 md:pt-2">
-    <h1 class="text-xl md:text-3xl">Resumen de compra</h1>
+    <h1 class="text-xl md:text-3xl">Resumen de venta</h1>
     <div class="grid mt-3" v-if="summary && !loading">
       <div class="col-12 md:col-6 grid">
           <p class="font-medium text-sm lg:text-base mr-2 col-4">Cliente:</p>

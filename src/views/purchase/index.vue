@@ -179,7 +179,7 @@
         <!-- </div> -->
     </div>
 
-    <Dialog v-model:visible="visible" modal header="Detalle de la venta">
+    <Dialog v-model:visible="visible" modal header="Compra">
         <div class="" v-if="purchase && !loading">
             <div class="lg:flex lg:justify-content-between lg:flex-wrap">
                 <div class="lg:flex-1">
