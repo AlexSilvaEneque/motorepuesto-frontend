@@ -121,7 +121,7 @@
                       <FormKit
                         :initialValues="{ selectedOption: initalValueP }"
                         type="select"
-                        label="Producto/Servicio"
+                        label="Producto"
                         placeholder="Seleccione un producto"
                         name="product"
                         :options="(products as any)"

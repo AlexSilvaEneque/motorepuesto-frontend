@@ -215,11 +215,11 @@
                 </div>
                 <div class="flex flex-column justify-content-center">
                     <template v-if="sale.statusPayment">
-                        <h5 class="text-center mb-1">Scanee el QR</h5>
+                        <!-- <h5 class="text-center mb-1">Scanee el QR</h5>
                         <div class="w-full text-center">
                             <QrcodeVue :value="linkQr" level="H" :size="100" render-as="svg" />
                         </div>
-                        <h5>o click en el botón</h5>
+                        <h5>o click en el botón</h5> -->
                         <Button
                             type="button"
                             class="mt-1"
@@ -297,11 +297,11 @@
                     </div>
                 </div>
                 <div class="flex flex-column justify-content-center">
-                    <h5 class="text-center mb-1"><Skeleton></Skeleton></h5>
+                    <!-- <h5 class="text-center mb-1"><Skeleton></Skeleton></h5>
                     <div class="w-full text-center">
                         <Skeleton width="100px" height="100px"></Skeleton>
                     </div>
-                    <h5 class="mb-1"><Skeleton></Skeleton></h5>
+                    <h5 class="mb-1"><Skeleton></Skeleton></h5> -->
                     <Skeleton width="100px" height="20px"></Skeleton>
                 </div>
             </div>
