@@ -27,10 +27,10 @@ export default function useSale() {
     const registerSale = async (formData : ISale) => {
         const send : ISale = {
             ...formData,
-            detailProducts: cartStore.cart
+            detailProducts: cartStore.cartSale
         }
 
-        if (cartStore.cart.length === 0) {
+        if (cartStore.cartSale.length === 0) {
             console.log('entra')
             toast.open({
                 message: 'Agregue productos al carrito',
@@ -56,7 +56,8 @@ export default function useSale() {
                 type: 'error'
             })
         } finally {
-            cartStore.$resetAll()
+            // cartStore.$resetAll()
+            cartStore.$reset()
         }
     }
 

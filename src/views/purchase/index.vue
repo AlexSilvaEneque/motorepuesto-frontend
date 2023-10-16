@@ -210,7 +210,7 @@
                 <h4 class="mb-1 mt-1">Detalle de la compra</h4>
                 <template v-if="purchase.detailProducts">
                     <DataTable :value="purchase.detailProducts" class="p-datatable-sm width-detail-table" scrollable scroll-height="200px">
-                        <Column header="Producto/Servicio" style="width: auto">
+                        <Column header="Producto" style="width: auto">
                             <template #body="prop">
                                 {{ prop.data.products.name }}
                             </template>

@@ -28,7 +28,7 @@ export default function usePurchase ()  {
     }
 
     const registerPurchase = async (formData : IPurchase) => {
-        if (purchaseStore.cart.length === 0) {
+        if (purchaseStore.cartPurchase.length === 0) {
             toast.open({
                 message: 'Agregue productos al carrito',
                 type: 'error'
@@ -38,7 +38,7 @@ export default function usePurchase ()  {
 
         const send : IPurchase = {
             ...formData,
-            detailProducts: purchaseStore.cart
+            detailProducts: purchaseStore.cartPurchase
         }
 
         try {
@@ -54,7 +54,7 @@ export default function usePurchase ()  {
                 type: 'error'
             })
         } finally {
-            purchaseStore.$resetAll()
+            purchaseStore.$resetProductSelected()
         }
     }
 

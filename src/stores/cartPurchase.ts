@@ -1,49 +1,37 @@
-import { ref, watchEffect } from "vue"
+import { ref } from "vue"
 import { defineStore } from "pinia"
 import type { ICartPurchase, IProduct } from "@/interfaces"
 
-export const useCartPurchaseStore = defineStore('cartPurchase', () => {
-
-    const productSelected = ref<IProduct | null>()
-    const cart = ref<ICartPurchase[]>([])
-    const subtotal = ref<number>(0)
-    const total = ref<number>(0)
-
-    function addCartPurchase(params: ICartPurchase) {
-        const exists = cart.value.findIndex((item) => item.products === params.products)
-        if (exists >= 0) {
-            alert('Ya está agregado')
-            return
+export const useCartPurchaseStore = defineStore('cartPurchase', {
+    state: () => {
+        return {
+            productSelected: ref<IProduct | null>(),
+            cartPurchase: ref<ICartPurchase[]>([])
         }
-        cart.value.push(params)
-    }
+    },
 
-    function deleteItem(param : ICartPurchase) {
-        cart.value = cart.value.filter(item => item.products !== param.products)
-    }
+    actions: {
+        addCartPurchase(params: ICartPurchase) {
+            const exists = this.cartPurchase.findIndex((item) => item.products === params.products)
+            if (exists >= 0) {
+                alert('Ya está agregado')
+                return
+            }
+            this.cartPurchase.push(params)
+        },
 
-    function $reset() {
-        productSelected.value = null
-    }
+        deleteItem(param : ICartPurchase) {
+            this.cartPurchase = this.cartPurchase.filter(item => item.products !== param.products)
+        },
 
-    function $resetAll() {
-        productSelected.value = null
-        cart.value = []
-        subtotal.value = 0
-        total.value = 0
-    }
+        $resetProductSelected() {
+            this.productSelected = null
+        }
+    },
 
-    watchEffect(() => {
-        subtotal.value = cart.value.reduce((total, item) => total + (item.price * item.quantity), 0)
-        total.value = subtotal.value
-    })
-    return {
-        productSelected,
-        total,
-        cart,
-        addCartPurchase,
-        deleteItem,
-        $reset,
-        $resetAll
-    }
+    getters: {
+        totalPurchase: (state) => state.cartPurchase.reduce((total, item) => total + (item.price * item.quantity), 0)
+    },
+
+    persist: true
 })

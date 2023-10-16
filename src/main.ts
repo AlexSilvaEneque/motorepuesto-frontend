@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import PrimeVue from 'primevue/config'
 import { plugin, defaultConfig } from '@formkit/vue'
 
@@ -42,7 +43,11 @@ const $toast = useToast({
 const app = createApp(App)
 
 app.provide('toast', $toast)
-app.use(createPinia())
+
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+
+app.use(pinia)
 app.use(router)
 .use(PrimeVue, { ripple: true })
 .use(plugin, defaultConfig(config))

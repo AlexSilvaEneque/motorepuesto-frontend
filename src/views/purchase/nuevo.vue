@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, onMounted, type Ref } from 'vue';
+    import { ref, onMounted, type Ref, computed } from 'vue';
     import type { ISupplier } from '../../interfaces/index';
     import type { IProduct } from '../../interfaces/index';
     import type { ICartSale } from '../../interfaces/index';
@@ -10,8 +10,11 @@
     import IBreadcrumb from "@/components/UI/IBreadcrumb.vue";
     import { useCartPurchaseStore } from "@/stores/cartPurchase"
     import { formatCurrency } from '../../utils/index';
+    import { useCount } from '@/stores/count'
 
     const cartStore = useCartPurchaseStore()
+
+    const cstore = useCount()
 
     const supplierComp = useSupplier()
     const productComp = useProduct()
@@ -36,6 +39,9 @@
         }
     ])
 
+    const isCompleted = computed(() => qtyRes.value > 0)
+    const withPrice = computed(() => price.value > 0)
+
     const handleSubmit = async (formData : IPurchase) => {
         await purchaseComp.registerPurchase(formData)
     }
@@ -53,7 +59,7 @@
             name: cartStore.productSelected?.name
         }
         cartStore.addCartPurchase(item)
-        cartStore.$reset()
+        cartStore.$resetProductSelected()
         price.value = 0
         qtyRes.value = 0
     }
@@ -140,6 +146,7 @@
                           name="quantityP"
                           validation="required"
                           v-model="(qtyRes as any)"
+                          :disabled="!withPrice"
                           :onInput="() => {}"
                       />
                   </div>
@@ -149,11 +156,12 @@
                       icon="pi pi-plus-circle"
                       type="button"
                       class="mt-3 w-full"
+                      :disabled="!isCompleted"
                       @click="addProduct"
                     />
                   </div>
                   <h3 class="block col-12 mb-2">Detalle compra</h3>
-                    <DataTable :value="cartStore.cart" class="p-datatable-sm width-detail-table1" >
+                    <DataTable :value="cartStore.cartPurchase" class="p-datatable-sm width-detail-table1" >
                         <Column header="Producto" class="hidden">
                             <template #body="prop">
                                 {{ prop.data.products }}
@@ -198,10 +206,10 @@
                           label=""
                           style="display: none;"
                           name="total"
-                          v-model="(cartStore.total as any)"
+                          v-model="(cartStore.totalPurchase as any)"
                           :onInput="() => {}"
                       />
-                    <span class="text-lg font-medium">{{ formatCurrency(Number(cartStore.total)) }}</span>
+                    <span class="text-lg font-medium">{{ formatCurrency(Number(cartStore.totalPurchase)) }}</span>
                 </div>
               </div>
               <Button
