@@ -38,6 +38,9 @@ export default function usePurchase ()  {
 
         const send : IPurchase = {
             ...formData,
+            total: {
+                $numberDecimal: purchaseStore.totalPurchase
+            },
             detailProducts: purchaseStore.cartPurchase
         }
 
@@ -54,7 +57,7 @@ export default function usePurchase ()  {
                 type: 'error'
             })
         } finally {
-            purchaseStore.$resetProductSelected()
+            purchaseStore.$reset()
         }
     }
 

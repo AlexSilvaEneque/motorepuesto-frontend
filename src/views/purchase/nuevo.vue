@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { ref, onMounted, type Ref, computed } from 'vue';
+    import { useRouter } from 'vue-router';
     import type { ISupplier } from '../../interfaces/index';
     import type { IProduct } from '../../interfaces/index';
     import type { ICartSale } from '../../interfaces/index';
@@ -10,11 +11,10 @@
     import IBreadcrumb from "@/components/UI/IBreadcrumb.vue";
     import { useCartPurchaseStore } from "@/stores/cartPurchase"
     import { formatCurrency } from '../../utils/index';
-    import { useCount } from '@/stores/count'
 
     const cartStore = useCartPurchaseStore()
 
-    const cstore = useCount()
+    const router = useRouter()
 
     const supplierComp = useSupplier()
     const productComp = useProduct()
@@ -30,7 +30,10 @@
     const home = ref({
         label: 'Compras',
         icon: 'pi pi-fw pi-cart-plus',
-        to: '/compras'
+        to: '/compras',
+        command: () => {
+            cartStore.$reset()
+        }
     })
     const items = ref([
         {
@@ -201,15 +204,14 @@
                     </DataTable>
                 <div class="w-full flex justify-content-between align-items-center px-1 mt-2">
                     <h4>Total a pagar:</h4>
-                    <FormKit
-                          type="text"
+                    <!-- <FormKit
+                          type="number"
                           label=""
-                          style="display: none;"
                           name="total"
-                          v-model="(cartStore.totalPurchase as any)"
+                          v-model="cartStore.totalPurchase"
                           :onInput="() => {}"
-                      />
-                    <span class="text-lg font-medium">{{ formatCurrency(Number(cartStore.totalPurchase)) }}</span>
+                    /> -->
+                    <span class="text-lg font-medium" id="total_purchase">{{ formatCurrency(cartStore.totalPurchase) }}</span>
                 </div>
               </div>
               <Button

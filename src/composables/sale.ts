@@ -25,10 +25,6 @@ export default function useSale() {
     }
 
     const registerSale = async (formData : ISale) => {
-        const send : ISale = {
-            ...formData,
-            detailProducts: cartStore.cartSale
-        }
 
         if (cartStore.cartSale.length === 0) {
             console.log('entra')
@@ -39,6 +35,14 @@ export default function useSale() {
             return
         }
 
+        const send : ISale = {
+            ...formData,
+            total: {
+                $numberDecimal: cartStore.totalSale
+            },
+            detailProducts: cartStore.cartSale
+        }
+
         try {
             const { data } = await saleAPI.registerSale(send)
             
@@ -46,7 +50,6 @@ export default function useSale() {
                 message: data.msg,
                 type: 'success'
             })
-            // router.push({ name: 'index-sale' })
 
             // ir a la pasarela
             router.push({ name: 'payment', params: { id: data.id } })
@@ -56,7 +59,6 @@ export default function useSale() {
                 type: 'error'
             })
         } finally {
-            // cartStore.$resetAll()
             cartStore.$reset()
         }
     }

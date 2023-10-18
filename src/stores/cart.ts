@@ -30,7 +30,17 @@ export const useCartStore = defineStore('cartSale', {
         }
     },
     getters: {
-        totalSale: (state) => state.cartSale.reduce((total, item) => total + (item.price * item.quantity), 0),
+        totalSale: (state) => {
+            return state.cartSale.reduce((total, item) => {
+                const itemPrice = parseFloat(String(item.price))
+                const itemQty = parseFloat(String(item.quantity))
+                if (!isNaN(itemPrice) && !isNaN(itemQty)) {
+                    return total + (itemPrice * itemQty)
+                } else {
+                    return total
+                }
+            }, 0 )
+        }
     },
     persist: true
 })

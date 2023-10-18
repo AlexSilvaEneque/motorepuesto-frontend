@@ -136,7 +136,6 @@ export interface ICartPurchase {
     price: number
     name?: string
     products?: string
-    // id: string
 }
 
 export interface ICreateOrder {

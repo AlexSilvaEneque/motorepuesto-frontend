@@ -29,7 +29,8 @@
     const home = ref({
         label: 'Ventas',
         icon: 'pi pi-fw pi-money-bill',
-        to: '/ventas'
+        to: '/ventas',
+        command: () => cartStore.$reset()
     })
     const items = ref([
         {
@@ -227,15 +228,7 @@
                     </DataTable>
                 <div class="w-full flex justify-content-between align-items-center px-1 mt-2">
                     <h4>Total a pagar:</h4>
-                    <FormKit
-                          type="text"
-                          label=""
-                          style="display: none;"
-                          name="total"
-                          v-model="(cartStore.totalSale as any)"
-                          :onInput="() => {}"
-                      />
-                    <span class="text-lg font-medium">{{ formatCurrency(Number(cartStore.totalSale)) }}</span>
+                    <span class="text-lg font-medium">{{ formatCurrency(cartStore.totalSale) }}</span>
                 </div>
               </div>
               <Button
