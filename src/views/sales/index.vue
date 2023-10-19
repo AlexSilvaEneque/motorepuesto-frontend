@@ -10,6 +10,7 @@
     import { convertoDDMMYYYY } from '../../utils/date';
     import { formatCurrency } from '../../utils/index';
 
+
     const router = useRouter()
     const composable = useSale()
 
@@ -81,6 +82,10 @@
             sale.value = null
         }
     }, { deep: true })
+
+    const pdf = () => {
+        window.print()
+    }
 
     onMounted(async () => {
         sales.value = await composable.allSales()
@@ -226,7 +231,8 @@
                             label="Boleta"
                             size="small"
                             @click="$router.push({ name: 'payment', params: { id: sale._id } })"
-                        />
+                            />
+                            <!-- @click="pdf" -->
                     </template>
                     <Button v-else
                         type="button"

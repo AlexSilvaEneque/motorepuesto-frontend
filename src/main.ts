@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import PrimeVue from 'primevue/config'
 import { plugin, defaultConfig } from '@formkit/vue'
+import { PDFPlugin } from 'vue3-pdfmake';
 
 import Button from 'primevue/button'
 import Menu from 'primevue/menu'
@@ -46,7 +47,7 @@ app.provide('toast', $toast)
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
-
+app.use(PDFPlugin)
 app.use(pinia)
 app.use(router)
 .use(PrimeVue, { ripple: true })

@@ -4,8 +4,21 @@
     import useSale from '../../composables/sale';
     import usePayment from '../../composables/usePayment';
     import type { ISale } from '../../interfaces/index';
-  import { convertoDDMMYYYY } from '../../utils/date';
-  import { formatCurrency } from '../../utils/index';
+    import { convertoDDMMYYYY } from '../../utils/date';
+    import { formatCurrency } from '../../utils/index';
+
+    
+    import { jsPDF } from 'jspdf'
+    import autoTable from 'jspdf-autotable'
+
+    
+
+    // import html2pdf from 'html2'
+
+    // import { usePDF } from 'vue3-pdfmake';
+
+
+    // const pdfmake = usePDF()
 
     const route = useRoute()
     const router = useRouter()
@@ -28,6 +41,86 @@
       if (aux.stateRes) {
         window.location.href = aux.link
       }
+    }
+    // const onGenPDF = () => {
+    //   pdfmake.createPdf({
+    //     content: [
+    //     {
+    //       style: 'tableExample',
+    //       table: {
+    //         // headerRows: 1,
+    //         body: [
+    //           // [{text: 'Header 1', style: 'tableHeader'}, {text: 'Header 2', style: 'tableHeader'}, {text: 'Header 3', style: 'tableHeader'}],
+    //           ['Cliente:', `${client.value}`, 'Fecha:', `${convertoDDMMYYYY(summary.value?.date)}`],
+    //           ['Vendedor:', `${seller.value}`, 'Estado de la venta:', `${stausPayment.value}`]
+    //         ]
+    //       },
+    //       layout: 'noBorders'
+    //     },
+    //     {
+    //       text: 'Detalle de la venta', fontSize: 14, bold: true, margin: [0,20,0,12]
+    //     }
+    //     ]
+    //   }).open();
+    // }
+
+    const creartePDF = () => {
+      const pdf = new jsPDF('p', 'mm', [90, 165])
+      pdf.setFontSize(14)
+      pdf.addFont('CourierNew', 'Courier New', 'normal')
+      pdf.setFont('Courier New', 'bold')
+      pdf.text(`Boleta venta`, 8, 20)
+      pdf.setFontSize(12)
+      pdf.setFont('Courier New', 'normal')
+      pdf.text(`Fecha: ${convertoDDMMYYYY(summary.value?.date)}`, 8, 28)
+      pdf.text(`Cliente: ${client.value}`, 8, 34)
+      pdf.text(`Vendedor: ${seller.value.split(' ')[0] + ' ' + seller.value.split(' ')[1]}`, 8, 40)
+      pdf.text(`Estado: ${stausPayment.value}`, 8, 46)
+      pdf.setFont('Courier New', 'bold')
+      pdf.text(`Detalle de venta`, 8, 56)
+
+      const columns = [["Producto", "Cantidad", "Precio"]]
+      const rows = summary.value?.detailProducts.map((product:any) => {
+        return [
+          product.products.name,
+          product.quantity,
+          product.products.price.$numberDecimal
+        ]
+      })
+      let rowss = summary.value?.detailProducts
+      console.log(rowss)
+
+      autoTable(pdf, {
+        head: columns,
+        body: rows,
+        startY: 60,
+        margin: {
+          left: 8
+        },
+        styles: {
+          fontSize: 11,
+          font: 'courrier'
+        },
+        headStyles: {
+          fillColor: '#E4E6E8',
+          textColor: 'black'
+        },
+        columnStyles: {
+          0: { cellWidth: 35 },
+          1: { cellWidth: 20 },
+          2: { cellWidth: 20 },
+        },
+        tableWidth: 'auto'
+      })
+
+      pdf.setFont('Courier New', 'bold')
+      pdf.text(`Total pagado: S/ ${summary.value?.total.$numberDecimal}`, 8, 150)
+
+      const datapdf = pdf.output()
+
+      const blob = new Blob([datapdf], { type: 'application/pdf' })
+      const url = URL.createObjectURL(blob)
+      window.open(url)
     }
 
     const verifyOnlyNumber = (event : KeyboardEvent) => {
@@ -66,6 +159,11 @@
 <template>
   <div class="w-full custom-2 bg-white border-round shadow-1 px-5 mt-3 pb-3 md:pb-0 md:pt-2">
     <h1 class="text-xl md:text-3xl">Resumen de venta</h1>
+    <Button label="PDF"
+      @click="creartePDF"
+    />
+    <!-- @click="onGenPDF" -->
+    <!-- @click="$router.push('/pdf')" -->
     <div class="grid mt-3" v-if="summary && !loading">
       <div class="col-12 md:col-6 grid">
           <p class="font-medium text-sm lg:text-base mr-2 col-4">Cliente:</p>
@@ -85,7 +183,7 @@
       </div>
       <div class="col-12">
         <h4 class="mb-3 text-base">Detalle de la venta</h4>
-        <DataTable :value="summary.detailProducts" class="p-datatable-sm width-detail-table1" >
+        <DataTable :value="summary.detailProducts" class="p-datatable-sm width-detail-table1" id="table-sale" >
           <Column header="Producto/Servicio" style="width: auto">
               <template #body="prop">
                   {{ prop.data.products.name }}
