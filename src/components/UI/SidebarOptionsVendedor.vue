@@ -29,18 +29,19 @@
         //     to: '/servicios',
         //     command: () => changeToggle()
         // },
-        {
-            label: 'Ventas',
-            icon: 'pi pi-money-bill',
-            to: '/ventas',
-            command: () => changeToggle()
-        },
-        {
-            label: 'Gastos e Ingresos',
-            icon: 'pi pi-calculator',
-            to: '/gastos-ingresos',
-            command: () => changeToggle()
-        },
+
+        // {
+        //     label: 'Ventas',
+        //     icon: 'pi pi-money-bill',
+        //     to: '/ventas',
+        //     command: () => changeToggle()
+        // },
+        // {
+        //     label: 'Gastos e Ingresos',
+        //     icon: 'pi pi-calculator',
+        //     to: '/gastos-ingresos',
+        //     command: () => changeToggle()
+        // },
         {
             label: 'Perfil',
             icon: 'pi pi-user',
