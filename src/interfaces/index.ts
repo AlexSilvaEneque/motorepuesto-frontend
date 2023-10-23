@@ -144,3 +144,32 @@ export interface ICreateOrder {
     currency_id: string
     quantity: number
 }
+
+interface DetailIncomes {
+    sale: string
+}
+
+interface DetailExpense {
+    purchase: string
+}
+
+export interface IIncomesExpenses {
+    _id?: string
+    initial_date?: Date | any
+    finish_date?: Date | any
+    detail_incomes?: ISale[] | string | DetailIncomes[]
+    detail_expenses?: IPurchase[] | string | DetailExpense[]
+    total_incomes: {
+        $numberDecimal: number
+    }
+    total_expenses: {
+        $numberDecimal: number
+    }
+}
+
+export interface ResponseIncomeExpense {
+    countpurchases: number
+    countsale: number
+    purchases: IPurchase[]
+    sales: ISale[]
+}

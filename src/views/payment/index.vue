@@ -11,15 +11,6 @@
     import { jsPDF } from 'jspdf'
     import autoTable from 'jspdf-autotable'
 
-    
-
-    // import html2pdf from 'html2'
-
-    // import { usePDF } from 'vue3-pdfmake';
-
-
-    // const pdfmake = usePDF()
-
     const route = useRoute()
     const router = useRouter()
     const composable = useSale()
@@ -42,27 +33,6 @@
         window.location.href = aux.link
       }
     }
-    // const onGenPDF = () => {
-    //   pdfmake.createPdf({
-    //     content: [
-    //     {
-    //       style: 'tableExample',
-    //       table: {
-    //         // headerRows: 1,
-    //         body: [
-    //           // [{text: 'Header 1', style: 'tableHeader'}, {text: 'Header 2', style: 'tableHeader'}, {text: 'Header 3', style: 'tableHeader'}],
-    //           ['Cliente:', `${client.value}`, 'Fecha:', `${convertoDDMMYYYY(summary.value?.date)}`],
-    //           ['Vendedor:', `${seller.value}`, 'Estado de la venta:', `${stausPayment.value}`]
-    //         ]
-    //       },
-    //       layout: 'noBorders'
-    //     },
-    //     {
-    //       text: 'Detalle de la venta', fontSize: 14, bold: true, margin: [0,20,0,12]
-    //     }
-    //     ]
-    //   }).open();
-    // }
 
     const creartePDF = () => {
       const pdf = new jsPDF('p', 'mm', [90, 165])

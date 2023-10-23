@@ -48,6 +48,12 @@
             command: () => changeToggle()
         },
         {
+            label: 'Gastos e Ingresos',
+            icon: 'pi pi-calculator',
+            to: '/gastos-ingresos',
+            command: () => changeToggle()
+        },
+        {
             label: 'Roles',
             icon: 'pi pi-briefcase',
             to: '/roles',

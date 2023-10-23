@@ -36,6 +36,12 @@
             command: () => changeToggle()
         },
         {
+            label: 'Gastos e Ingresos',
+            icon: 'pi pi-calculator',
+            to: '/gastos-ingresos',
+            command: () => changeToggle()
+        },
+        {
             label: 'Perfil',
             icon: 'pi pi-user',
             to: '/mi-perfil',

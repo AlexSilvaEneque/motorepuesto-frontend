@@ -3,7 +3,6 @@ import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import PrimeVue from 'primevue/config'
 import { plugin, defaultConfig } from '@formkit/vue'
-import { PDFPlugin } from 'vue3-pdfmake';
 
 import Button from 'primevue/button'
 import Menu from 'primevue/menu'
@@ -17,11 +16,15 @@ import Column from 'primevue/column'
 import Dropdown from 'primevue/dropdown'
 import Sidebar from 'primevue/sidebar'
 import Dialog from 'primevue/dialog'
-// import Toast from 'primevue/toast'
+import Calendar from 'primevue/calendar'
 import ConfirmDialog from 'primevue/confirmdialog'
 import ConfirmationService from 'primevue/confirmationservice'
 import Tag from 'primevue/tag'
 import Skeleton from 'primevue/skeleton'
+import TabView from 'primevue/tabview'
+import TabPanel from 'primevue/tabpanel'
+import DataView from 'primevue/dataview'
+import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'
 
 import { useToast } from 'vue-toast-notification'
 
@@ -47,7 +50,6 @@ app.provide('toast', $toast)
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
-app.use(PDFPlugin)
 app.use(pinia)
 app.use(router)
 .use(PrimeVue, { ripple: true })
@@ -68,5 +70,9 @@ app.component("ConfirmDialog", ConfirmDialog)
 app.component("Tag", Tag)
 app.component("Skeleton", Skeleton)
 app.component("InputNumber", InputNumber)
-// app.component("Toast", Toast)
+app.component("Calendar", Calendar)
+app.component("TabView", TabView)
+app.component("TabPanel", TabPanel)
+app.component("DataView", DataView)
+app.component("DataViewLayoutOptions", DataViewLayoutOptions)
 app.mount('#app')
