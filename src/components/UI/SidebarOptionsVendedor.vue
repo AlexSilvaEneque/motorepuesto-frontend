@@ -29,12 +29,12 @@
         //     to: '/servicios',
         //     command: () => changeToggle()
         // },
-        {
-            label: 'Ventas',
-            icon: 'pi pi-money-bill',
-            to: '/ventas',
-            command: () => changeToggle()
-        },
+        // {
+        //     label: 'Ventas',
+        //     icon: 'pi pi-money-bill',
+        //     to: '/ventas',
+        //     command: () => changeToggle()
+        // },
         {
             label: 'Gastos e Ingresos',
             icon: 'pi pi-calculator',
