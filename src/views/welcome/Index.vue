@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class="w-full h-screen border-2 border-blue relative">
+    <div class="w-full h-screen border-2 border-transparent relative">
         <div class="flex justify-content-between px-8 mt-5">
             <div>
                 Donny Logo
