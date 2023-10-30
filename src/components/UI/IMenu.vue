@@ -9,9 +9,9 @@
     const menu = ref()
     const items = ref([
         {
-            label: 'Configuración',
-            icon: 'pi pi-cog',
-            to: '/mi-perfil'
+            label: 'Mi perfil',
+            icon: 'pi pi-user',
+            to: '/admin/mi-perfil'
         },
         {
             label: 'Cerrar sesión',

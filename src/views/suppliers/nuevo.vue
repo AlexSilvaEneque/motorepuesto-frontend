@@ -9,7 +9,7 @@
     const home = ref({
         label: 'Proveedores',
         icon: 'pi pi-fw pi-truck',
-        to: '/proveedores'
+        to: '/admin/proveedores'
     })
     const items = ref([
         {
@@ -51,6 +51,7 @@
                 :actions="false"
                 incomplete-message="Revisa las notificaciones"
                 @submit="handleSubmit"
+                :onInput="() => {}"
             >
                 <div class="formgrid grid">
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -63,6 +64,7 @@
                             :validation-messages="{
                                 required: 'La razón social es obligatorio'
                             }"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -75,6 +77,7 @@
                             :validation-messages="{
                                 required: 'El representante es obligatorio'
                             }"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -87,6 +90,7 @@
                             :validation-messages="{
                                 required: 'El teléfono es obligatorio'
                             }"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -95,6 +99,7 @@
                             label="Dirección"
                             name="address"
                             placeholder="Dirección"
+                            :onInput="() => {}"
                         />
                     </div>
                     <div class="field col-12 md:col-6 lg:col-4">
@@ -103,6 +108,7 @@
                             label="Email"
                             name="email"
                             placeholder="Email"
+                            :onInput="() => {}"
                         />
                     </div>
                 </div>

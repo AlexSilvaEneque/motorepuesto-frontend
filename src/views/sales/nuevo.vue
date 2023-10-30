@@ -29,7 +29,7 @@
     const home = ref({
         label: 'Ventas',
         icon: 'pi pi-fw pi-money-bill',
-        to: '/ventas',
+        to: '/admin/ventas',
         command: () => cartStore.$reset()
     })
     const items = ref([

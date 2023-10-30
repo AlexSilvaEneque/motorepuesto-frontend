@@ -25,6 +25,8 @@ import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import DataView from 'primevue/dataview'
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'
+import SpeedDial from 'primevue/speeddial'
+import ProgressSpinner from 'primevue/progressspinner'
 
 import { useToast } from 'vue-toast-notification'
 
@@ -75,4 +77,6 @@ app.component("TabView", TabView)
 app.component("TabPanel", TabPanel)
 app.component("DataView", DataView)
 app.component("DataViewLayoutOptions", DataViewLayoutOptions)
+app.component("SpeedDial", SpeedDial)
+app.component("ProgressSpinner", ProgressSpinner)
 app.mount('#app')

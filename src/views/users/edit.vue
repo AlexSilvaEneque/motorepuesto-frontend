@@ -16,7 +16,7 @@
     const home = ref({
         label: 'Usuarios',
         icon: 'pi pi-fw pi-user',
-        to: '/usuarios'
+        to: '/admin/usuarios'
     })
     const items = ref([
         {

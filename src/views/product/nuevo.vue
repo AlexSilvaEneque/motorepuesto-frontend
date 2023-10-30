@@ -10,7 +10,7 @@
     const home = ref({
         label: 'Productos',
         icon: 'pi pi-fw pi-qrcode',
-        to: '/productos'
+        to: '/admin/productos'
     })
     const items = ref([
         {

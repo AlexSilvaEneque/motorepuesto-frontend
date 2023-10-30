@@ -12,7 +12,7 @@
     const home = ref({
         label: 'Roles',
         icon: 'pi pi-fw pi-briefcase',
-        to: '/roles'
+        to: '/admin/roles'
     })
     const items = ref([
         {

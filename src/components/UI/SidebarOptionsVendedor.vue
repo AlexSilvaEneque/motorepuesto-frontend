@@ -8,19 +8,19 @@
         {
             label: 'Dashboard',
             icon: 'pi pi-home',
-            to: '/',
+            to: '/admin/dashboard',
             command: () => changeToggle()
         },
         {
             label: 'Clientes',
             icon: 'pi pi-users',
-            to: '/clientes',
+            to: '/admin/clientes',
             command: () => changeToggle()
         },
         {
             label: 'Productos',
             icon: 'pi pi-qrcode',
-            to: '/productos',
+            to: '/admin/productos',
             command: () => changeToggle()
         },
         // {
@@ -29,22 +29,22 @@
         //     to: '/servicios',
         //     command: () => changeToggle()
         // },
-        // {
-        //     label: 'Ventas',
-        //     icon: 'pi pi-money-bill',
-        //     to: '/ventas',
-        //     command: () => changeToggle()
-        // },
+        {
+            label: 'Ventas',
+            icon: 'pi pi-money-bill',
+            to: '/admin/ventas',
+            command: () => changeToggle()
+        },
         {
             label: 'Gastos e Ingresos',
             icon: 'pi pi-calculator',
-            to: '/gastos-ingresos',
+            to: '/admin/gastos-ingresos',
             command: () => changeToggle()
         },
         {
             label: 'Perfil',
             icon: 'pi pi-user',
-            to: '/mi-perfil',
+            to: '/admin/mi-perfil',
             command: () => changeToggle()
         },
     ])

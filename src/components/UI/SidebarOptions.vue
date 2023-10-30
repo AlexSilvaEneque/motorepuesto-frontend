@@ -8,67 +8,67 @@
         {
             label: 'Dashboard',
             icon: 'pi pi-home',
-            to: '/',
+            to: '/admin/dashboard',
             command: () => changeToggle()
         },
         {
             label: 'Clientes',
             icon: 'pi pi-users',
-            to: '/clientes',
+            to: '/admin/clientes',
             command: () => changeToggle()
         },
         {
             label: 'Proveedores',
             icon: 'pi pi-truck',
-            to: '/proveedores',
+            to: '/admin/proveedores',
             command: () => changeToggle()
         },
         {
             label: 'Productos',
             icon: 'pi pi-qrcode',
-            to: '/productos',
+            to: '/admin/productos',
             command: () => changeToggle()
         },
         // {
         //     label: 'Servicios',
         //     icon: 'pi pi-wrench',
-        //     to: '/servicios',
-        //     command: () => changeToggle()
-        // },
-        // {
-        //     label: 'Compras',
-        //     icon: 'pi pi-cart-plus',
-        //     to: '/compras',
-        //     command: () => changeToggle()
-        // },
-        // {
-        //     label: 'Ventas',
-        //     icon: 'pi pi-money-bill',
-        //     to: '/ventas',
-        //     command: () => changeToggle()
-        // },
-        // {
-        //     label: 'Gastos e Ingresos',
-        //     icon: 'pi pi-calculator',
-        //     to: '/gastos-ingresos',
+        //     to: '/admin/servicios',
         //     command: () => changeToggle()
         // },
         {
+            label: 'Compras',
+            icon: 'pi pi-cart-plus',
+            to: '/admin/compras',
+            command: () => changeToggle()
+        },
+        {
+            label: 'Ventas',
+            icon: 'pi pi-money-bill',
+            to: '/admin/ventas',
+            command: () => changeToggle()
+        },
+        {
+            label: 'Gastos e Ingresos',
+            icon: 'pi pi-calculator',
+            to: '/admin/gastos-ingresos',
+            command: () => changeToggle()
+        },
+        {
             label: 'Roles',
             icon: 'pi pi-briefcase',
-            to: '/roles',
+            to: '/admin/roles',
             command: () => changeToggle()
         },
         {
             label: 'Usuarios',
             icon: 'pi pi-users',
-            to: '/usuarios',
+            to: '/admin/usuarios',
             command: () => changeToggle()
         },
         {
             label: 'Perfil',
             icon: 'pi pi-user',
-            to: '/mi-perfil',
+            to: '/admin/mi-perfil',
             command: () => changeToggle()
         },
     ])

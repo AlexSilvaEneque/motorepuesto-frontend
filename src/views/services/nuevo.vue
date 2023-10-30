@@ -9,7 +9,7 @@
     const home = ref({
         label: 'Servicios',
         icon: 'pi pi-fw pi-wrench',
-        to: '/servicios'
+        to: '/admin/servicios'
     })
     const items = ref([
         {

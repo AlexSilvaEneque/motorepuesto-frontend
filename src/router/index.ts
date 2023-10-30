@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '../views/layouts/MainLayout.vue'
 import AuthLayout from '../views/layouts/AuthLayout.vue'
+import Welcome from '../views/welcome/Index.vue'
 import AuthAPI from '@/api/AuthAPI'
 
 const router = createRouter({
@@ -9,6 +10,11 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      component: Welcome
+    },
+    {
+      path: '/admin',
+      name: 'admin',
       component: MainLayout,
       meta: {
         requiresAuth: true
@@ -26,7 +32,7 @@ const router = createRouter({
         },
 
         {
-          path: '',
+          path: 'dashboard',
           name: 'dashboard',
           component: () => import('../views/Dashboard.vue')
         },

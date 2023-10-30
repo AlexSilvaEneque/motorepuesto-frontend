@@ -60,6 +60,10 @@
         
     }
 
+    const redirectPDF = (id : string) => {
+        window.open('http://localhost:3000/'+id, '_blank')
+    }
+
     const deleteItem = async (id : string) => {
         confirm.require({
             group: 'positionDialog',
@@ -230,8 +234,9 @@
                             class="mt-1"
                             label="Boleta"
                             size="small"
-                            @click="$router.push({ name: 'payment', params: { id: sale._id } })"
+                            @click="redirectPDF(sale._id!)"
                             />
+                            <!-- @click="$router.push({ name: 'payment', params: { id: sale._id } })" -->
                             <!-- @click="pdf" -->
                     </template>
                     <Button v-else

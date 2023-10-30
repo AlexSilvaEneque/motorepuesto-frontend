@@ -13,7 +13,7 @@
     const home = ref({
         label: 'Proveedores',
         icon: 'pi pi-fw pi-truck',
-        to: '/proveedores'
+        to: '/admin/proveedores'
     })
     const items = ref([
         {

@@ -30,7 +30,7 @@
     const home = ref({
         label: 'Compras',
         icon: 'pi pi-fw pi-cart-plus',
-        to: '/compras',
+        to: '/admin/compras',
         command: () => {
             cartStore.$reset()
         }
