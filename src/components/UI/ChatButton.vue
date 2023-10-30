@@ -19,7 +19,7 @@
 
     const displayResponse = computed(() => {
       if (message.value.includes('Horarios de')) {
-        return 'Lunes a Viernes de 9 a.m - 1 p.m y de 3 p.m - 7 p.m'
+        return 'Lunes a Sábado de 8 a.m - 12 p.m y de 2 p.m - 7 p.m'
       }
       if (message.value.includes('¿Dónde nos')) {
         return 'Nos encontramos en .... Guadalupe'
@@ -28,7 +28,7 @@
         return 'Venta de repuestos, mantenimiento, cambio de aceite, afinamiento de motor y todo lo relacionado con automotriz'
       }
       if (message.value.includes('¿Cómo')) {
-        return 'Nos puedes llamar al siguiente número +51 999 999 999'
+        return 'Nos puedes llamar al siguiente número +51 941 203 050'
       }
       return ''
     })
