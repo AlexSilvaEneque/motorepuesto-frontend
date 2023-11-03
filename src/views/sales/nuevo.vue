@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { ref, onMounted, reactive, type Ref, computed } from 'vue';
+    import { useRouter } from 'vue-router';
     import type { IClient } from '../../interfaces/index';
     import type { IProduct } from '../../interfaces/index';
     import type { ICartSale } from '../../interfaces/index';
@@ -11,6 +12,8 @@
     import { formatCurrency } from '../../utils/index';
     import useSale from '@/composables/sale';
     import type { ISale } from '../../interfaces/index';
+
+    const router = useRouter()
 
     const cartStore = useCartStore()
 
@@ -24,7 +27,7 @@
     const qty = ref(0)
     const price = ref(0)
     const qtyRes = ref(0)
-    const initalValueP = ref({ label: 'Selecciona', value: '0' })
+    const initalValueP = ref({ label: 'Selecciona' })
 
     const home = ref({
         label: 'Ventas',
@@ -64,6 +67,11 @@
         qty.value = 0
         price.value = 0
         qtyRes.value = 0
+    }
+
+    const cancelSale = () => {
+        router.push({ name: 'index-sale' })
+        cartStore.$reset()
     }
 
     onMounted(async () => {
@@ -123,7 +131,7 @@
                           name="payment_type"
                           validation="required"
                           :options="[
-                            { label: 'Selecciona un medio de pago', value: '0', attrs: { selected: true, disabled: true } },
+                            { label: 'Selecciona un medio de pago', value: '', attrs: { selected: true, disabled: true } },
                             { label: 'Efectivo', value: '1' },
                             // { label: 'Pago en línea', value: '2' }
                           ]"
@@ -231,12 +239,20 @@
                     <span class="text-lg font-medium">{{ formatCurrency(cartStore.totalSale) }}</span>
                 </div>
               </div>
-              <Button
-                  label="Guardar"
-                  icon="pi pi-save"
-                  type="submit"
-                  class="block mt-2"
-              />
+              <div class="w-full mt-2 flex justify-content-between">
+                <Button
+                    label="Guardar"
+                    icon="pi pi-save"
+                    type="submit"
+                />
+                <Button
+                    label="Cancelar"
+                    icon="pi pi-times"
+                    type="button"
+                    severity="secondary"
+                    @click="cancelSale"
+                />
+              </div>
             </FormKit>
 
         </div>

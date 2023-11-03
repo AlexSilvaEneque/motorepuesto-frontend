@@ -110,7 +110,11 @@
                     </span>    
                 </template>
 
-                <template #empty>No hay data</template>
+                <template #empty>
+                    <div class="w-full flex justify-content-center">
+                        No hay registros
+                    </div>
+                </template>
 
                 <Column field="social_reason" header="Nombre" sortable />
                 <Column field="representative" header="Representante" sortable />

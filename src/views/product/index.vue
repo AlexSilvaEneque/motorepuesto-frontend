@@ -121,7 +121,11 @@
                     </span>    
                 </template>
 
-                <template #empty>No hay data</template>
+                <template #empty>
+                    <div class="w-full flex justify-content-center">
+                        No hay registros
+                    </div>
+                </template>
                 
                 <Column field="name" header="Nombre" sortable />
                 <Column header="Precio" sortable>

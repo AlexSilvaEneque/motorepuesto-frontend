@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '../views/layouts/MainLayout.vue'
 import AuthLayout from '../views/layouts/AuthLayout.vue'
 import Welcome from '../views/welcome/Index.vue'
+import ShowSale from '../views/welcome/ShowSale.vue'
 import AuthAPI from '@/api/AuthAPI'
 
 const router = createRouter({
@@ -11,6 +12,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Welcome
+    },
+    {
+      path: '/show-sale/:id',
+      name: 'show-sale',
+      component: ShowSale
     },
     {
       path: '/admin',

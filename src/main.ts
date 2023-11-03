@@ -27,6 +27,7 @@ import DataView from 'primevue/dataview'
 import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'
 import SpeedDial from 'primevue/speeddial'
 import ProgressSpinner from 'primevue/progressspinner'
+import Chart from 'primevue/chart'
 
 import { useToast } from 'vue-toast-notification'
 
@@ -79,4 +80,5 @@ app.component("DataView", DataView)
 app.component("DataViewLayoutOptions", DataViewLayoutOptions)
 app.component("SpeedDial", SpeedDial)
 app.component("ProgressSpinner", ProgressSpinner)
+app.component("Chart", Chart)
 app.mount('#app')

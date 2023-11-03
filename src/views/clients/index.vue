@@ -110,11 +110,15 @@
                     <span class="p-input-icon-left">
                         <i class="pi pi-search" />
                         <InputText v-model="searchInput" placeholder="Buscar" />
-                    </span>    
+                    </span>
                 </template>
 
-                <template #empty>No hay data</template>
-                
+                <template #empty>
+                    <div class="w-full flex justify-content-center">
+                        No hay registros
+                    </div>
+                </template>
+
                 <Column field="name" header="Nombre" sortable />
                 <Column header="Tipo" sortable>
                     <template #body="prop">

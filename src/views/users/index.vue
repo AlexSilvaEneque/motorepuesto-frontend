@@ -122,9 +122,9 @@
                 </template>
 
                 <template #empty>
-                    <p class="text-center">
-                        No hay coincidencias
-                    </p>
+                    <div class="w-full flex justify-content-center">
+                        No hay registros
+                    </div>
                 </template>
 
                 <Column field="first_name" header="Nombre" sortable />

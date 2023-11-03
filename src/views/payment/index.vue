@@ -5,14 +5,13 @@
     import usePayment from '../../composables/usePayment';
     import type { ISale } from '../../interfaces/index';
     import { convertoDDMMYYYY } from '../../utils/date';
-    import { formatCurrency } from '../../utils/index';
+    import SummarySale from '@/components/UI/SummarySale.vue';
 
     
     import { jsPDF } from 'jspdf'
     import autoTable from 'jspdf-autotable'
 
     const route = useRoute()
-    const router = useRouter()
     const composable = useSale()
     const composablePayment = usePayment()
     const summary = ref<ISale | null>(null)
@@ -116,7 +115,6 @@
     const registerPay = async () => {
       await composablePayment.changeStatusPayment(summary.value?._id!)
       await getSummary()
-      // router.push({ name: 'payment', params: { id: id } })
     }
 
     const isValid = computed(() => Number(recive.value!) >= summary.value?.total.$numberDecimal! &&  recive.value)
@@ -128,64 +126,7 @@
 
 <template>
   <div class="w-full custom-2 bg-white border-round shadow-1 px-5 mt-3 pb-3 md:pb-0 md:pt-2">
-    <h1 class="text-xl md:text-3xl">Resumen de venta</h1>
-    <!-- <Button label="PDF"
-      @click="redirectPDF"
-    /> -->
-    <!-- @click="creartePDF" -->
-    <div class="grid mt-3" v-if="summary && !loading">
-      <div class="col-12 md:col-6 grid">
-          <p class="font-medium text-sm lg:text-base mr-2 col-4">Cliente:</p>
-          <span class="col text-sm lg:text-base">{{ client }}</span>
-      </div>
-      <div class="col-12 md:col-6 grid">
-          <p class="font-medium text-sm lg:text-base mr-2 col-4">Fecha de venta:</p>
-          <span class="col text-sm lg:text-base">{{ convertoDDMMYYYY(summary.date) }}</span>
-      </div>
-      <div class="col-12 md:col-6 grid">
-          <p class="font-medium text-sm lg:text-base mr-2 col-4">Vendedor:</p>
-          <span class="col text-sm lg:text-base">{{ seller }}</span>
-      </div>
-      <div class="col-12 md:col-6 grid">
-          <p class="font-medium text-sm lg:text-base mr-2 col-4">Estado venta:</p>
-          <span class="col text-sm lg:text-base">{{ stausPayment }}</span>
-      </div>
-      <div class="col-12">
-        <h4 class="mb-3 text-base">Detalle de la venta</h4>
-        <DataTable :value="summary.detailProducts" class="p-datatable-sm width-detail-table1" id="table-sale" >
-          <Column header="Producto/Servicio" style="width: auto">
-              <template #body="prop">
-                  {{ prop.data.products.name }}
-              </template>
-          </Column>
-          <Column header="Cantidad" style="width: 15%">
-              <template #body="prop">
-                  {{ prop.data.quantity }}
-              </template>
-          </Column>
-          <Column header="Precio" style="width: 15%">
-              <template #body="prop">
-                  {{ formatCurrency(Number(prop.data.products.price.$numberDecimal)) }}
-              </template>
-          </Column>
-          <Column header="Subtotal" style="width: 15%">
-              <template #body="prop">
-                  <span style="float: right;">
-                      {{ formatCurrency(Number(prop.data.products.price.$numberDecimal * prop.data.quantity)) }}
-                  </span>
-              </template>
-          </Column>
-      </DataTable>
-      <div class="w-full flex justify-content-between align-items-center px-1 mt-3">
-          <h4 class="text-base">Total {{ summary.statusPayment ? 'pagado:' : 'a pagar:' }} </h4>
-          <span class="lg:text-lg font-medium">{{ formatCurrency(Number(summary.total.$numberDecimal)) }}</span>
-      </div>
-      </div>
-    </div>
-
-    <div v-else>
-      Loading ...
-    </div>
+    <SummarySale v-if="summary" :summary="summary" :loading="loading" />
 
     <template v-if="!summary?.statusPayment && !loading">
       <template v-if="summary?.payment_type === '1'">
@@ -204,6 +145,13 @@
             label="Confirmar pago"
             :disabled="!(isValid as boolean)"
             @click="registerPay"
+          />
+          <Button
+            type="button"
+            class="mt-2"
+            label="Regresar a ventas"
+            severity="secondary"
+            @click="$router.push({ name: 'index-sale' })"
           />
         </div>
       </template>

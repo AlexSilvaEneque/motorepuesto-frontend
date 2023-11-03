@@ -82,12 +82,14 @@
                 </template>
             </Sidebar>
 
-            <div class="col mx-2 ">
+            <div class="col mx-2">
                 <div class="w-full mx-auto bg-white shadow-2 h-5rem mt-1 mb-2 border-round flex align-items-center justify-content-between px-3">
                     <IMenu @change-visibility="change" />
                 </div>
 
-                <RouterView />
+                <div class="w-full">
+                    <RouterView />
+                </div>
                 
             </div>
         </div>

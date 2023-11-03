@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { ref, computed, onMounted, watch, inject, type Ref } from "vue"
+    import { ref, computed, onMounted, watch, type Ref } from "vue"
     import { useRouter } from "vue-router"
     import type { ISale } from '../../interfaces/index'
     import useSale from '../../composables/sale';
@@ -15,7 +15,6 @@
     const composable = useSale()
 
     const confirm = useConfirm()
-    const toast : any = inject('toast')
 
     const searchInput = ref('')
     const visible = ref(false)
@@ -42,8 +41,6 @@
       }
     })
 
-    // const linkQr = computed<string>(() => sale.value?.statusPayment ? : )
-
     const goToView = () => {
         router.push({ name: 'new-sale' })
     }
@@ -52,12 +49,8 @@
         visible.value = true
         loading.value = true
         sale.value = await composable.getSaleById(id)
-        linkQr.value = import.meta.env.VITE_URL_FRONT + 'payment/' + sale.value?._id
+        linkQr.value = import.meta.env.VITE_URL_FRONT + 'show-sale/' + sale.value?._id
         loading.value = false
-    }
-
-    const redirectEdit = (id : string) => {
-        
     }
 
     const redirectPDF = (id : string) => {
@@ -81,15 +74,16 @@
         })
     }
 
+    const getSeverityStatusPay = (sale: ISale) : string => {
+        if (!sale.statusPayment) return 'warning'
+        return 'success'
+    }
+
     watch(visible, () => {
         if (!visible) {
             sale.value = null
         }
     }, { deep: true })
-
-    const pdf = () => {
-        window.print()
-    }
 
     onMounted(async () => {
         sales.value = await composable.allSales()
@@ -105,8 +99,6 @@
                 :home="current"
             />
         </div>
-        <!-- <div class="w-full" v-if="sales.length > 0"> -->
-
             <div class="md:flex justify-content-end mb-3">
                 <Button
                     label="Registrar venta"
@@ -132,9 +124,9 @@
                 </template>
 
                 <template #empty>
-                    <p class="text-center">
-                        No hay coincidencias
-                    </p>
+                    <div class="w-full flex justify-content-center">
+                        No hay registros
+                    </div>
                 </template>
 
                 <Column header="Cliente" sortable >
@@ -157,7 +149,7 @@
 
                 <Column header="Estado" sortable >
                     <template #body="prop">
-                        <Tag :value="prop.data.statusPayment ? 'Pagada' : 'Pendiente de pago'" :severity="getSeverityStatus(prop.data)" />
+                        <Tag :value="prop.data.statusPayment ? 'Pagada' : 'Pendiente de pago'" :severity="getSeverityStatusPay(prop.data)" />
                     </template>
                 </Column>
                 
@@ -171,13 +163,6 @@
                                 outlined
                                 @click="view(slotProps.data._id)"
                             />
-                            <!-- <Button
-                                icon="pi pi-pencil"
-                                severity="success"
-                                size="small"
-                                outlined
-                                @click="redirectEdit(slotProps.data._id)"
-                            /> -->
                             <Button
                                 :disabled="!slotProps.data.status"
                                 icon="pi pi-trash"
@@ -190,7 +175,6 @@
                     </template>
                 </Column>
             </DataTable>
-        <!-- </div> -->
     </div>
 
     <Dialog v-model:visible="visible" modal header="Detalle de la venta">
@@ -207,10 +191,6 @@
                             {{ typeof sale.client !== 'string' ? sale.client.name : '' }}
                         </span>
                     </div>
-                    <!-- <div class="col-12 grid">
-                        <p class="font-medium mr-2 col-6">Medio de pago:</p>
-                        <span class="col">{{ sale.payment_type }}</span>
-                    </div> -->
                     <div class="col-12 grid">
                         <p class="font-medium mr-2 col-6">Vendedor:</p>
                         <span class="col">
@@ -219,25 +199,23 @@
                     </div>
                     <div class="col-12 grid">
                         <p class="font-medium mr-2 col-6">Estado:</p>
-                        <Tag :value="sale.statusPayment ? 'Pagada' : 'Pendiente de pago'" :severity="getSeverityStatus(sale)" />
+                        <Tag :value="sale.statusPayment ? 'Pagada' : 'Pendiente de pago'" :severity="getSeverityStatusPay(sale)" />
                     </div>
                 </div>
                 <div class="flex flex-column justify-content-center">
                     <template v-if="sale.statusPayment">
-                        <!-- <h5 class="text-center mb-1">Scanee el QR</h5>
+                        <h5 class="text-center mb-1">Scanee el QR</h5>
                         <div class="w-full text-center">
                             <QrcodeVue :value="linkQr" level="H" :size="100" render-as="svg" />
                         </div>
-                        <h5>o click en el botón</h5> -->
+                        <h5>o click en el botón</h5>
                         <Button
                             type="button"
                             class="mt-1"
                             label="Boleta"
                             size="small"
                             @click="redirectPDF(sale._id!)"
-                            />
-                            <!-- @click="$router.push({ name: 'payment', params: { id: sale._id } })" -->
-                            <!-- @click="pdf" -->
+                        />
                     </template>
                     <Button v-else
                         type="button"
@@ -308,11 +286,11 @@
                     </div>
                 </div>
                 <div class="flex flex-column justify-content-center">
-                    <!-- <h5 class="text-center mb-1"><Skeleton></Skeleton></h5>
+                    <h5 class="text-center mb-1"><Skeleton></Skeleton></h5>
                     <div class="w-full text-center">
                         <Skeleton width="100px" height="100px"></Skeleton>
                     </div>
-                    <h5 class="mb-1"><Skeleton></Skeleton></h5> -->
+                    <h5 class="mb-1"><Skeleton></Skeleton></h5>
                     <Skeleton width="100px" height="20px"></Skeleton>
                 </div>
             </div>
