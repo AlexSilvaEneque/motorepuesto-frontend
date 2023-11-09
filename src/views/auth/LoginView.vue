@@ -1,11 +1,15 @@
 <script setup lang="ts">
+    import { ref } from 'vue'
     import type { Credenciales } from '../../interfaces/index'
     import useUser from '../../composables/user'
 
     const composable = useUser()
+    const loading = ref<boolean>(false)
 
     const handleSubmit = async (formData : Credenciales) => {
+        loading.value = true
         await composable.login(formData)
+        loading.value = false
     }
 </script>
 
@@ -49,10 +53,17 @@
                     />
                 </div>
                 </div>
-                <FormKit
+                <!-- <FormKit
                     type="submit"
                     label="Iniciar sesión"
+                    :loading="loading"
                     :onInput="() => {}"
+                /> -->
+                <Button
+                    class="w-full"
+                    type="submit"
+                    label="Iniciar sesión"
+                    :loading="loading"
                 />
             </FormKit>
     </div>

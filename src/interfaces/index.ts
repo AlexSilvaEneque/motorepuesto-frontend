@@ -5,6 +5,11 @@ export interface ProToggle {
     changeToggle: () => void
 }
 
+export interface HelpToggle {
+    helpstate: Ref<Boolean>,
+    // changeHelp: () => void
+}
+
 export interface Credenciales {
     email: string
     password: string
@@ -172,4 +177,49 @@ export interface ResponseIncomeExpense {
     countsale: number
     purchases: IPurchase[]
     sales: ISale[]
+}
+
+interface ReportOpQty {
+    total: number,
+    _id: string
+}
+
+interface ReportOpMoney {
+    total: {
+        $numberDecimal: number
+    },
+    _id: string
+}
+
+export interface ResponseReportSale {
+    sale: ReportOpQty[],
+    money: ReportOpMoney[]
+}
+
+export interface ResponseReportSale {
+    purchase: ReportOpQty[],
+    money: ReportOpMoney[]
+}
+
+interface DataClient {
+    clientId: string,
+    name: string
+}
+
+interface DataEmployee {
+    userId: string,
+    name: string,
+    last_name: string,
+    email: string,
+    role: string
+}
+
+export interface ResponseReportClient {
+    _id: DataClient,
+    totalSales: number
+}
+
+export interface ResponseReportEmployee {
+    _id: DataEmployee,
+    totalSales: number
 }

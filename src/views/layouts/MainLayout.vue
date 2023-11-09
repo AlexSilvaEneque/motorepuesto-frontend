@@ -1,7 +1,7 @@
 <script setup lang="ts">
     import { ref, provide, onMounted } from 'vue'
     import type {Ref} from 'vue'
-    import type { ProToggle } from '../../interfaces/index'
+    import type { ProToggle, HelpToggle } from '../../interfaces/index'
     import SidebarOptions from '@/components/UI/SidebarOptions.vue'
     import SidebarOptionsVendedor from '@/components/UI/SidebarOptionsVendedor.vue'
     import SidebarMovil from '@/components/UI/SidebarMovil.vue'
@@ -9,10 +9,12 @@
     import { useUserStore } from '../../stores/user'
     import AuthAPI from '@/api/AuthAPI'
     import SidebarMovilVendedor from '@/components/UI/SidebarMovilVendedor.vue'
+    import Asistent from '@/components/UI/Asistent.vue'
 
     const user = useUserStore()
 
     const toggle : Ref<boolean> = ref(false)
+    const helpstate : Ref<boolean> = ref(false)
     const windowWidth : Ref<number> = ref(0)
     const flagAdmin : Ref<boolean> = ref(false)
 
@@ -28,6 +30,23 @@
         changeToggle: change
     })
 
+    const changeHelp = () => {
+        helpstate.value = !helpstate.value
+    }
+
+    provide<HelpToggle>('help', {
+        helpstate
+    })
+
+    const handlerShowHelp = (e: KeyboardEvent) => {
+        if (e.ctrlKey && e.key === 'F10') {
+            console.log('dio f10')
+            helpstate.value = true
+        } else {
+            helpstate.value = false
+        }
+    }
+
     const checkScreen = () => {
         windowWidth.value = window.innerWidth
         if (windowWidth.value >= 768) {
@@ -38,6 +57,9 @@
     onMounted(async () => {
         window.addEventListener('resize', checkScreen)
         checkScreen()
+
+        // para el help
+        document.addEventListener('keydown', handlerShowHelp)
 
         try {
             const { data } = await AuthAPI.admin()
@@ -88,7 +110,9 @@
                 </div>
 
                 <div class="w-full">
-                    <RouterView />
+                    <RouterView class="relative" />
+
+                    <Asistent />
                 </div>
                 
             </div>

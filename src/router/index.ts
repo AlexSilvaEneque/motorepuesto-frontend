@@ -145,6 +145,12 @@ const router = createRouter({
         },
 
         {
+          path: 'reportes',
+          name: 'index-reports',
+          component: () => import('../views/reports/index.vue')
+        },
+
+        {
           path: 'pdf',
           name: 'pdf-sale',
           component: () => import('../views/pdf/index.vue')

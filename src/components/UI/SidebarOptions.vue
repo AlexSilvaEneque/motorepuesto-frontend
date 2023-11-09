@@ -54,6 +54,12 @@
             command: () => changeToggle()
         },
         {
+            label: 'Reportes',
+            icon: 'pi pi-chart-line',
+            to: '/admin/reportes',
+            command: () => changeToggle()
+        },
+        {
             label: 'Roles',
             icon: 'pi pi-briefcase',
             to: '/admin/roles',
