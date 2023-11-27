@@ -32,7 +32,7 @@ const router = createRouter({
           component: () => import('../views/payment/index.vue')
         },
         {
-          path: 'payment/verify',
+          path: 'payment/verify/x',
           name: 'payment-verify',
           component: () => import('../views/payment/verify.vue')
         },

@@ -15,17 +15,17 @@ import api from '@/lib/axios';
 
     onMounted(async () => {
         await xs()
-        if (localStorage.getItem('history')) {
-            const path = localStorage.getItem('history')
-            const id = path!.split('/')[2]
-            if (route.query.collection_status) {
-                console.log('entra')
-                await composablePayment.changeStatusPayment(id)
-            }
-            router.push(path!)
-        } else {
-            console.log('no history')
-        }
+        // if (localStorage.getItem('history')) {
+        //     const path = localStorage.getItem('history')
+        //     const id = path!.split('/')[2]
+        //     if (route.query.collection_status) {
+        //         console.log('entra')
+        //         await composablePayment.changeStatusPayment(id)
+        //     }
+        //     router.push(path!)
+        // } else {
+        //     console.log('no history')
+        // }
     })
 </script>
 
