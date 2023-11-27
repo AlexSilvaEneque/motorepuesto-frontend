@@ -25,12 +25,12 @@
                 </TabPanel>
                 <TabPanel header="Toma de decisiones">
                     <TabView>
-                        <TabPanel header="Productos">
+                        <!-- <TabPanel header="Productos">
                             <Products />
                         </TabPanel>
                         <TabPanel header="Servicios">
                             <Services />
-                        </TabPanel>
+                        </TabPanel> -->
                         <TabPanel header="Clientes">
                             <Clients />
                         </TabPanel>
