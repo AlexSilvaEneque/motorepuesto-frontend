@@ -14,6 +14,7 @@ import api from '@/lib/axios';
     }
 
     onMounted(async () => {
+        await xs()
         if (localStorage.getItem('history')) {
             const path = localStorage.getItem('history')
             const id = path!.split('/')[2]
