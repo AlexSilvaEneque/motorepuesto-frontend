@@ -5,20 +5,20 @@
     const composable = useReports()
 
     onMounted(async () => {
-        await composable.getProducts()
+        await composable.getService()
     })
 </script>
 
 <template>
     <div class="w-full">
-        <h3 class="mb-2">Productos más vendidos</h3>
-        <DataTable :value="composable.responseProduct.value" class="p-datatable-sm" tableStyle="min-width: 20rem">
-            <Column header="Nombre del producto">
+        <h3 class="mb-2">Servicio más solicitado</h3>
+        <DataTable :value="composable.responseService.value" class="p-datatable-sm" tableStyle="min-width: 20rem">
+            <Column header="Nombre del servicio">
                 <template #body="prop">
                     {{ prop.data._id }}
                 </template>
             </Column>
-            <Column header="Cantidad vendida">
+            <Column header="Cantidad">
                 <template #body="prop">
                     {{ prop.data.totalSold }}
                 </template>

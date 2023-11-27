@@ -71,7 +71,7 @@
 
     const cancelSale = () => {
         router.push({ name: 'index-sale' })
-        cartStore.$reset()
+        cartStore.reset()$
     }
 
     onMounted(async () => {

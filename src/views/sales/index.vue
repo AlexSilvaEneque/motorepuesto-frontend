@@ -54,7 +54,9 @@
     }
 
     const redirectPDF = (id : string) => {
-        window.open('https://mo1torepuesto-donny.vercel.app/'+id, '_blank')
+        // window.open('https://mo1torepuesto-donny.vercel.app/'+id, '_blank')
+        window.open('https://service-pdf.vercel.app/'+id, '_blank')
+        // window.open('http://localhost:3000/'+id, '_blank')
     }
 
     const deleteItem = async (id : string) => {

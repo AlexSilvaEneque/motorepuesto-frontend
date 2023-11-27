@@ -223,3 +223,8 @@ export interface ResponseReportEmployee {
     _id: DataEmployee,
     totalSales: number
 }
+
+export interface ResponseReportProduct {
+    _id: string
+    totalSold: number
+}

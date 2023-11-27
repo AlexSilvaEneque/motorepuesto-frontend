@@ -4,6 +4,7 @@
     import Products from '@/components/Reports/Products.vue';
     import Clients from '@/components/Reports/Clients.vue';
     import Employee from '@/components/Reports/Employee.vue';
+    import Services from '@/components/Reports/Services.vue';
 </script>
 
 <template>
@@ -26,6 +27,9 @@
                     <TabView>
                         <TabPanel header="Productos">
                             <Products />
+                        </TabPanel>
+                        <TabPanel header="Servicios">
+                            <Services />
                         </TabPanel>
                         <TabPanel header="Clientes">
                             <Clients />

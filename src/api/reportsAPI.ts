@@ -13,4 +13,10 @@ export default {
     employee() {
         return api.get('/reports/employee')
     },
+    product() {
+        return api.get('/reports/product')
+    },
+    service() {
+        return api.get('/reports/service')
+    }
 }
